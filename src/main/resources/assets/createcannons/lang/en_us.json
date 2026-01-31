@@ -1,0 +1,42 @@
+{
+    "item.createcannons.kinetic_cannon": "Kinetic Cannon",
+    "item.createcannons.cannon_barrel": "Cannon Barrel",
+    "item.createcannons.cannon_breech": "Cannon Breech",
+    "item.createcannons.iron_cannonball": "Iron Cannonball",
+    "item.createcannons.steel_cannonball": "Steel Cannonball",
+    "item.createcannons.explosive_shell": "Explosive Shell",
+    "item.createcannons.cannon_casting": "Cannon Casting",
+    "item.createcannons.incomplete_cannon_barrel": "Incomplete Cannon Barrel",
+    "item.createcannons.gunpowder_charge": "Gunpowder Charge",
+    
+    "block.createcannons.kinetic_cannon": "Kinetic Cannon",
+    "block.createcannons.cannon_barrel": "Cannon Barrel",
+    "block.createcannons.cannon_breech": "Cannon Breech",
+    
+    "itemGroup.createcannons.main": "Create Cannons",
+    
+    "tooltip.createcannons.damage": "Damage: %s",
+    "tooltip.createcannons.explosion_radius": "Explosion Radius: %s",
+    "tooltip.createcannons.cannonball_usage": "Load into a Kinetic Cannon to fire",
+    "tooltip.createcannons.stress_impact": "Stress Impact: %s SU",
+    "tooltip.createcannons.requires_rotation": "Requires Rotational Force",
+    
+    "message.createcannons.projectile_loaded": "Projectile loaded",
+    "message.createcannons.projectile_already_loaded": "Projectile already loaded",
+    "message.createcannons.charge_loaded": "Charge loaded",
+    "message.createcannons.charge_already_loaded": "Charge already loaded",
+    "message.createcannons.no_projectile": "No projectile loaded",
+    "message.createcannons.no_charge": "No charge loaded",
+    "message.createcannons.insufficient_stress": "Insufficient rotational force",
+    "message.createcannons.cooldown": "Cooling down... %.1fs",
+    "message.createcannons.fired": "FIRE!",
+    
+    "gui.createcannons.kinetic_cannon.title": "Kinetic Cannon",
+    "gui.createcannons.kinetic_cannon.loaded": "Loaded: %s",
+    "gui.createcannons.kinetic_cannon.not_loaded": "Not Loaded",
+    "gui.createcannons.kinetic_cannon.cooldown": "Cooldown: %s",
+    "gui.createcannons.kinetic_cannon.ready": "Ready to Fire",
+    "gui.createcannons.kinetic_cannon.stress": "Stress: %s / %s SU",
+    
+    "entity.createcannons.cannonball": "Cannonball"
+}
