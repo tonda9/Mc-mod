@@ -168,6 +168,158 @@ public class CCBlocks {
             )
     );
     
+    // ==================== SIEGITE ORE BLOCKS (LATE-GAME) ====================
+    
+    /**
+     * Siegite Ore - late-game ore found at the deepest levels.
+     * 
+     * Essential for Nova Cannon construction and advanced ammunition.
+     * Found at Y levels -64 to -16, primarily in deepslate.
+     * Requires diamond pickaxe or better to mine.
+     * 
+     * Balance Note: Rarer than cannonite, gates end-game content
+     */
+    public static final DeferredBlock<Block> SIEGITE_ORE = BLOCKS.register(
+            "siegite_ore",
+            () -> new DropExperienceBlock(
+                    UniformInt.of(5, 10),
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.STONE)
+                            .strength(4.0f, 4.0f)
+                            .requiresCorrectToolForDrops()
+                            .sound(SoundType.STONE)
+            )
+    );
+    
+    /**
+     * Deepslate Siegite Ore - variant found in deepslate.
+     * 
+     * More common than regular siegite ore at very low Y levels.
+     * Harder to mine than the stone variant.
+     */
+    public static final DeferredBlock<Block> DEEPSLATE_SIEGITE_ORE = BLOCKS.register(
+            "deepslate_siegite_ore",
+            () -> new DropExperienceBlock(
+                    UniformInt.of(5, 10),
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.DEEPSLATE)
+                            .strength(5.5f, 4.0f)
+                            .requiresCorrectToolForDrops()
+                            .sound(SoundType.DEEPSLATE)
+            )
+    );
+    
+    /**
+     * Siegite Block - storage block for siegite ingots.
+     * 
+     * Crafted from 9 siegite ingots. Can be used as decoration
+     * or compact storage.
+     */
+    public static final DeferredBlock<Block> SIEGITE_BLOCK = BLOCKS.register(
+            "siegite_block",
+            () -> new Block(
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.COLOR_PURPLE)
+                            .strength(6.0f, 8.0f)
+                            .requiresCorrectToolForDrops()
+                            .sound(SoundType.NETHERITE_BLOCK)
+            )
+    );
+    
+    /**
+     * Raw Siegite Block - storage block for raw siegite.
+     * 
+     * Crafted from 9 raw siegite. Useful for bulk storage
+     * before processing the ore.
+     */
+    public static final DeferredBlock<Block> RAW_SIEGITE_BLOCK = BLOCKS.register(
+            "raw_siegite_block",
+            () -> new Block(
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.COLOR_PURPLE)
+                            .strength(5.0f, 6.0f)
+                            .requiresCorrectToolForDrops()
+                            .sound(SoundType.STONE)
+            )
+    );
+    
+    // ==================== NOVA CANNON MULTIBLOCK COMPONENTS ====================
+    
+    /**
+     * Nova Cannon Core - the central control block of the Nova Cannon.
+     * 
+     * The heart of the Nova Cannon multiblock structure.
+     * Manages stress consumption, firing logic, and multiblock validation.
+     * Requires a complete structure to operate:
+     * - 1 Nova Cannon Core (this block)
+     * - 2+ Nova Cannon Frames (support structure)
+     * - 3+ Heavy Barrel Segments (extended barrel)
+     * 
+     * Properties:
+     * - Requires 512 SU base + 64 per barrel segment
+     * - 80 tick cooldown (4 seconds)
+     * - Only fires Nova Shells
+     * 
+     * Tier: End-game
+     */
+    public static final DeferredBlock<Block> NOVA_CANNON_CORE = BLOCKS.register(
+            "nova_cannon_core",
+            () -> new Block( // TODO: Replace with NovaCannonCoreBlock when implemented
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.COLOR_BLACK)
+                            .strength(8.0f, 12.0f)
+                            .requiresCorrectToolForDrops()
+                            .noOcclusion()
+                            .sound(SoundType.NETHERITE_BLOCK)
+            )
+    );
+    
+    /**
+     * Nova Cannon Frame - structural support for Nova Cannon.
+     * 
+     * Provides structural integrity for the Nova Cannon.
+     * Must be placed adjacent to Nova Cannon Core or other frames.
+     * Minimum 2 frames required for functional cannon.
+     * 
+     * Placement rules:
+     * - Can be placed horizontally around the core
+     * - Forms the support structure
+     * - Each frame adds 16 SU to stress cost
+     */
+    public static final DeferredBlock<Block> NOVA_CANNON_FRAME = BLOCKS.register(
+            "nova_cannon_frame",
+            () -> new Block(
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.METAL)
+                            .strength(7.0f, 10.0f)
+                            .requiresCorrectToolForDrops()
+                            .sound(SoundType.METAL)
+            )
+    );
+    
+    /**
+     * Heavy Barrel Segment - extended barrel for Nova Cannon.
+     * 
+     * Must be placed in front of Nova Cannon Core in a line.
+     * Each segment increases projectile velocity and range.
+     * Minimum 3 segments required for functional cannon.
+     * 
+     * Properties:
+     * - Adds 10% velocity per segment
+     * - Adds 64 SU stress cost per segment
+     * - Maximum 8 segments
+     */
+    public static final DeferredBlock<Block> HEAVY_BARREL_SEGMENT = BLOCKS.register(
+            "heavy_barrel_segment",
+            () -> new Block(
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.METAL)
+                            .strength(7.0f, 10.0f)
+                            .requiresCorrectToolForDrops()
+                            .sound(SoundType.METAL)
+            )
+    );
+    
     // ==================== HELPER METHODS ====================
     
     /**

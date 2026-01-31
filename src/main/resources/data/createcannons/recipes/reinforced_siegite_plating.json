@@ -1,0 +1,22 @@
+{
+  "_comment": "Reinforced Siegite Plating - Advanced component for Nova Cannon and heavy ammunition.",
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "SBS",
+    "BSB",
+    "SBS"
+  ],
+  "key": {
+    "S": {
+      "item": "createcannons:siegite_ingot"
+    },
+    "B": {
+      "item": "create:brass_ingot"
+    }
+  },
+  "result": {
+    "id": "createcannons:reinforced_siegite_plating",
+    "count": 4
+  }
+}

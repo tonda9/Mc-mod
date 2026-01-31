@@ -212,6 +212,11 @@ public class CannonballEntity extends Projectile {
     /**
      * Main tick update for the cannonball.
      * Handles physics, collision detection, and lifetime management.
+     * 
+     * Updated to support new projectile types:
+     * - Cluster bombs split at trajectory apex
+     * - Rocket-assisted shells continue thrust
+     * - Nova shells have extended lifetime
      */
     @Override
     public void tick() {
@@ -219,8 +224,9 @@ public class CannonballEntity extends Projectile {
         
         ticksAlive++;
         
-        // Check lifetime
-        if (ticksAlive > MAX_LIFETIME_TICKS) {
+        // Check lifetime (extended for heavy/nova projectiles)
+        int maxLifetime = projectileType == ProjectileType.NOVA ? MAX_LIFETIME_TICKS * 2 : MAX_LIFETIME_TICKS;
+        if (ticksAlive > maxLifetime) {
             CreateCannons.LOGGER.debug("Cannonball despawned due to max lifetime");
             this.discard();
             return;
@@ -261,41 +267,63 @@ public class CannonballEntity extends Projectile {
     
     /**
      * Applies physics forces to the cannonball.
-     * Handles gravity, air resistance, and wind based on projectile type.
+     * 
+     * Enhanced physics system handles:
+     * - Gravity with mass-based modification
+     * - Air resistance with drag coefficient
+     * - Wind effects for realism
+     * - Rocket thrust for self-propelled projectiles
+     * - Mass-based velocity loss calculations
+     * 
+     * All parameters are derived from ProjectileType for configurability.
      */
     private void applyPhysics() {
         Vec3 velocity = getDeltaMovement();
         
-        // Calculate effective gravity based on projectile type
-        double effectiveGravity = BASE_GRAVITY * projectileType.getGravityMultiplier();
+        // Get physics parameters from projectile type
+        double mass = projectileType.getMass();
+        double gravityMult = projectileType.getGravityMultiplier();
+        double airResMult = projectileType.getAirResistanceMultiplier();
         
-        // Calculate effective air resistance based on projectile type
-        double effectiveAirResistance = BASE_AIR_RESISTANCE * projectileType.getAirResistanceMultiplier();
+        // Calculate effective gravity based on projectile type
+        // Heavier projectiles affected slightly more by gravity
+        double effectiveGravity = BASE_GRAVITY * gravityMult * (1.0 + mass * 0.005);
         
         // Apply gravity (downward acceleration)
         velocity = velocity.add(0, -effectiveGravity, 0);
         
-        // Apply air resistance (velocity dampening)
-        velocity = velocity.scale(1 - effectiveAirResistance);
+        // Apply mass-based air resistance using projectile type's calculation
+        double newSpeed = projectileType.calculateVelocityAfterDrag(velocity.length());
+        if (velocity.length() > 0.001) {
+            velocity = velocity.normalize().scale(newSpeed);
+        }
         
         // Apply wind effect (slight random deviation for realism)
+        // Lighter projectiles are more affected by wind
+        double windEffect = WIND_STRENGTH / Math.sqrt(mass);
         if (level().random.nextFloat() < 0.3) {
-            double windX = (level().random.nextDouble() - 0.5) * WIND_STRENGTH;
-            double windZ = (level().random.nextDouble() - 0.5) * WIND_STRENGTH;
+            double windX = (level().random.nextDouble() - 0.5) * windEffect;
+            double windZ = (level().random.nextDouble() - 0.5) * windEffect;
             velocity = velocity.add(windX, 0, windZ);
         }
         
-        // Rocket ammo gets slight thrust to maintain velocity
-        if (projectileType == ProjectileType.ROCKET && ticksAlive < 100) {
-            Vec3 direction = velocity.normalize();
-            velocity = velocity.add(direction.scale(0.01));
+        // Apply thrust for rocket and rocket-assisted projectiles
+        if (projectileType.hasRocketTrail() || projectileType.hasThrust()) {
+            double thrust = projectileType.calculateThrust(ticksAlive);
+            if (thrust > 0 && velocity.length() > 0.01) {
+                Vec3 direction = velocity.normalize();
+                velocity = velocity.add(direction.scale(thrust));
+            }
         }
         
         setDeltaMovement(velocity);
     }
     
     /**
-     * Splits a cluster bomb into multiple smaller projectiles.
+     * Splits a cluster bomb or fragmentation shell into multiple projectiles.
+     * 
+     * Cluster bombs split at apex of trajectory.
+     * Fragmentation shells split on impact (called from explode()).
      */
     private void splitClusterBomb() {
         if (level().isClientSide || hasExploded) {
@@ -304,21 +332,25 @@ public class CannonballEntity extends Projectile {
         
         hasExploded = true;
         
-        // Create 8 smaller projectiles in a spread pattern
-        for (int i = 0; i < 8; i++) {
+        // Get fragment count from projectile type
+        int fragmentCount = projectileType.getFragmentCount();
+        if (fragmentCount <= 0) fragmentCount = 8;
+        
+        // Create smaller projectiles in a spread pattern
+        for (int i = 0; i < fragmentCount; i++) {
             CannonballEntity cluster = new CannonballEntity(
                     CCEntityTypes.CANNONBALL.get(),
                     level(),
                     this.getX(), this.getY(), this.getZ()
             );
             
-            // Set reduced damage for cluster pieces
+            // Set reduced damage for cluster/fragment pieces
             cluster.setDamage(damage * 0.5f);
             cluster.setExplosionRadius(explosionRadius * 0.5f);
             cluster.setProjectileType(ProjectileType.STANDARD);
             
             // Calculate spread velocity
-            double angle = (2 * Math.PI * i) / 8;
+            double angle = (2 * Math.PI * i) / fragmentCount;
             double spreadX = Math.cos(angle) * 0.3;
             double spreadZ = Math.sin(angle) * 0.3;
             Vec3 baseVel = getDeltaMovement();
@@ -337,6 +369,44 @@ public class CannonballEntity extends Projectile {
                 1.0f, 1.0f);
         
         this.discard();
+    }
+    
+    /**
+     * Splits a fragmentation shell into shrapnel on impact.
+     */
+    private void splitFragmentationShell() {
+        if (level().isClientSide) {
+            return;
+        }
+        
+        int fragmentCount = projectileType.getFragmentCount();
+        
+        // Create shrapnel in all directions
+        for (int i = 0; i < fragmentCount; i++) {
+            CannonballEntity fragment = new CannonballEntity(
+                    CCEntityTypes.CANNONBALL.get(),
+                    level(),
+                    this.getX(), this.getY(), this.getZ()
+            );
+            
+            // Shrapnel has lower damage but spreads widely
+            fragment.setDamage(damage);
+            fragment.setExplosionRadius(explosionRadius);
+            fragment.setProjectileType(ProjectileType.STANDARD);
+            
+            // Random spherical spread
+            double theta = level().random.nextDouble() * Math.PI * 2;
+            double phi = level().random.nextDouble() * Math.PI;
+            double speed = 0.5 + level().random.nextDouble() * 0.3;
+            
+            fragment.setDeltaMovement(
+                    Math.sin(phi) * Math.cos(theta) * speed,
+                    Math.cos(phi) * speed,
+                    Math.sin(phi) * Math.sin(theta) * speed
+            );
+            
+            level().addFreshEntity(fragment);
+        }
     }
     
     /**
@@ -470,7 +540,15 @@ public class CannonballEntity extends Projectile {
     /**
      * Creates an explosion at the cannonball's position.
      * Called when the cannonball impacts something or comes to rest.
-     * Handles different explosion types based on projectile type.
+     * 
+     * Handles different explosion types based on projectile type:
+     * - Standard: Normal explosion
+     * - Smoke: No explosion, creates smoke cloud
+     * - Grapeshot: No explosion, damage already dealt
+     * - Incendiary: Explosion + fire
+     * - High-Yield: Massive explosion with lingering effects
+     * - Fragmentation: Explosion + shrapnel spread
+     * - Nova: Devastating AoE with visual effects
      */
     private void explode() {
         if (hasExploded || level().isClientSide) {
@@ -492,18 +570,33 @@ public class CannonballEntity extends Projectile {
             return;
         }
         
+        // Handle fragmentation shell - explosion + shrapnel
+        if (projectileType.isFragmentation()) {
+            // Create initial explosion
+            level().explode(
+                    this,
+                    this.getX(), this.getY(), this.getZ(),
+                    explosionRadius,
+                    false,
+                    Level.ExplosionInteraction.TNT
+            );
+            
+            // Split into fragments
+            splitFragmentationShell();
+            this.discard();
+            return;
+        }
+        
         // Determine if explosion should cause fire (incendiary shells)
         boolean causesFire = projectileType.causesFire();
         
         // Create explosion with appropriate interaction type
-        Level.ExplosionInteraction interactionType = projectileType.isNuclear() 
+        Level.ExplosionInteraction interactionType = projectileType.isHighYield() 
                 ? Level.ExplosionInteraction.MOB 
                 : Level.ExplosionInteraction.TNT;
         
-        // Nuclear shells get a larger explosion
-        float effectiveRadius = projectileType.isNuclear() 
-                ? explosionRadius * 1.5f 
-                : explosionRadius;
+        // Calculate effective radius using projectile type multiplier
+        float effectiveRadius = explosionRadius * projectileType.getExplosionMultiplier();
         
         // Create the main explosion
         level().explode(
@@ -514,9 +607,9 @@ public class CannonballEntity extends Projectile {
                 interactionType
         );
         
-        // Nuclear shells create additional effects
-        if (projectileType.isNuclear()) {
-            createNuclearEffects();
+        // High-yield and Nova shells create additional effects
+        if (projectileType.isHighYield()) {
+            createHighYieldEffects();
         }
         
         // Incendiary shells set additional fires
@@ -524,10 +617,11 @@ public class CannonballEntity extends Projectile {
             createFireArea();
         }
         
-        // Play explosion sound
+        // Play explosion sound (louder for high-yield)
+        float volume = projectileType.isHighYield() ? 4.0f : 2.0f;
         level().playSound(null, this.getX(), this.getY(), this.getZ(),
                 SoundEvents.GENERIC_EXPLODE.value(), SoundSource.BLOCKS,
-                2.0f, 0.9f + level().random.nextFloat() * 0.2f);
+                volume, 0.9f + level().random.nextFloat() * 0.2f);
         
         CreateCannons.LOGGER.debug("Cannonball exploded at {} with radius {}", 
                 position(), effectiveRadius);
@@ -570,26 +664,37 @@ public class CannonballEntity extends Projectile {
     }
     
     /**
-     * Creates nuclear explosion effects - radiation and lingering damage.
+     * Creates high-yield explosion effects - lingering damage and visual effects.
+     * Used for High-Yield Shell and Nova Shell.
+     * 
+     * Effects:
+     * - Lingering area effect cloud with wither and weakness
+     * - Massive particle effects
+     * - Scaling based on projectile type (Nova is more powerful)
      */
-    private void createNuclearEffects() {
+    private void createHighYieldEffects() {
         if (level() instanceof ServerLevel serverLevel) {
-            // Create radiation area effect
-            AreaEffectCloud radiation = new AreaEffectCloud(level(), this.getX(), this.getY(), this.getZ());
-            radiation.setRadius(10.0f);
-            radiation.setDuration(600); // 30 seconds
-            radiation.setRadiusOnUse(-0.2f);
-            radiation.setWaitTime(10);
-            radiation.addEffect(new MobEffectInstance(MobEffects.WITHER, 100, 1));
-            radiation.addEffect(new MobEffectInstance(MobEffects.POISON, 200, 2));
-            radiation.setParticle(ParticleTypes.SOUL_FIRE_FLAME);
-            level().addFreshEntity(radiation);
+            // Calculate scale based on projectile type
+            float radiusScale = projectileType == ProjectileType.NOVA ? 2.0f : 1.0f;
+            int durationScale = projectileType == ProjectileType.NOVA ? 2 : 1;
             
-            // Create massive particle effect
-            for (int i = 0; i < 100; i++) {
+            // Create lingering damage area effect
+            AreaEffectCloud damageCloud = new AreaEffectCloud(level(), this.getX(), this.getY(), this.getZ());
+            damageCloud.setRadius(10.0f * radiusScale);
+            damageCloud.setDuration(600 * durationScale); // 30-60 seconds
+            damageCloud.setRadiusOnUse(-0.2f);
+            damageCloud.setWaitTime(10);
+            damageCloud.addEffect(new MobEffectInstance(MobEffects.WITHER, 100 * durationScale, 1));
+            damageCloud.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 200 * durationScale, 1));
+            damageCloud.setParticle(ParticleTypes.SOUL_FIRE_FLAME);
+            level().addFreshEntity(damageCloud);
+            
+            // Create massive particle effect (mushroom cloud style)
+            int particleCount = projectileType == ProjectileType.NOVA ? 200 : 100;
+            for (int i = 0; i < particleCount; i++) {
                 double angle = level().random.nextDouble() * Math.PI * 2;
-                double distance = level().random.nextDouble() * 15;
-                double height = level().random.nextDouble() * 20;
+                double distance = level().random.nextDouble() * 15 * radiusScale;
+                double height = level().random.nextDouble() * 20 * radiusScale;
                 serverLevel.sendParticles(
                         ParticleTypes.EXPLOSION,
                         this.getX() + Math.cos(angle) * distance,
@@ -598,7 +703,27 @@ public class CannonballEntity extends Projectile {
                         1, 0, 0, 0, 0
                 );
             }
+            
+            // Add extra visual flair for Nova shells
+            if (projectileType == ProjectileType.NOVA) {
+                // Create ascending column of particles
+                for (int i = 0; i < 50; i++) {
+                    serverLevel.sendParticles(
+                            ParticleTypes.SOUL_FIRE_FLAME,
+                            this.getX(), this.getY() + i * 0.5, this.getZ(),
+                            5, 2, 0.5, 2, 0.01
+                    );
+                }
+            }
         }
+    }
+    
+    /**
+     * @deprecated Use createHighYieldEffects() instead
+     */
+    @Deprecated
+    private void createNuclearEffects() {
+        createHighYieldEffects();
     }
     
     /**
@@ -633,15 +758,22 @@ public class CannonballEntity extends Projectile {
     /**
      * Spawns trail particles behind the cannonball.
      * Particle type depends on projectile type.
+     * 
+     * Updated to support new projectile types:
+     * - Rocket/Rocket-Assisted: Intense flame trail
+     * - High-Yield/Nova: Eerie soul flame glow
+     * - Fragmentation: Spark trail
+     * - Incendiary: Fire particles
      */
     private void spawnTrailParticles() {
         if (level() instanceof ServerLevel serverLevel) {
-            // Rocket trail - intense flame effect
-            if (projectileType.hasRocketTrail()) {
+            // Rocket and rocket-assisted trail - intense flame effect
+            if (projectileType.hasRocketTrail() || projectileType.hasThrust()) {
+                int particleCount = projectileType.hasThrust() ? 5 : 3;
                 serverLevel.sendParticles(
                         ParticleTypes.FLAME,
                         this.getX(), this.getY(), this.getZ(),
-                        3,
+                        particleCount,
                         0.1, 0.1, 0.1,
                         0.02
                 );
@@ -655,14 +787,37 @@ public class CannonballEntity extends Projectile {
                 return;
             }
             
-            // Nuclear - eerie glow
-            if (projectileType.isNuclear()) {
+            // High-yield and Nova - eerie glow
+            if (projectileType.isHighYield()) {
+                int particleCount = projectileType == ProjectileType.NOVA ? 5 : 2;
                 serverLevel.sendParticles(
                         ParticleTypes.SOUL_FIRE_FLAME,
                         this.getX(), this.getY(), this.getZ(),
-                        2,
+                        particleCount,
                         0.05, 0.05, 0.05,
                         0.01
+                );
+                // Nova shells have additional visual effect
+                if (projectileType == ProjectileType.NOVA && ticksAlive % 2 == 0) {
+                    serverLevel.sendParticles(
+                            ParticleTypes.END_ROD,
+                            this.getX(), this.getY(), this.getZ(),
+                            1,
+                            0.1, 0.1, 0.1,
+                            0.005
+                    );
+                }
+                return;
+            }
+            
+            // Fragmentation - spark trail
+            if (projectileType.isFragmentation()) {
+                serverLevel.sendParticles(
+                        ParticleTypes.CRIT,
+                        this.getX(), this.getY(), this.getZ(),
+                        2,
+                        0.1, 0.1, 0.1,
+                        0.02
                 );
                 return;
             }

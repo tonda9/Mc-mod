@@ -7,6 +7,12 @@
  * In Create, stress is the measure of mechanical load on a kinetic network.
  * Machines consume stress when operating, and sources (like waterwheels)
  * provide stress capacity. The network fails if consumption exceeds capacity.
+ * 
+ * Balance Notes:
+ * - Kinetic Cannon: 256 SU base (mid-game requirement)
+ * - Nova Cannon: 512 SU base (end-game requirement)
+ * - Projectile multipliers scale stress cost by ammo type
+ * - Heavy barrel segments add incremental stress cost
  */
 package com.createcannons.stress;
 
@@ -22,7 +28,7 @@ package com.createcannons.stress;
  */
 public final class StressConfig {
     
-    // ==================== CANNON STRESS VALUES ====================
+    // ==================== KINETIC CANNON STRESS VALUES ====================
     
     /**
      * Stress impact of the Kinetic Cannon per RPM.
@@ -51,6 +57,40 @@ public final class StressConfig {
      */
     public static final float FIRING_STRESS_MULTIPLIER = 2.0f;
     
+    // ==================== NOVA CANNON STRESS VALUES ====================
+    
+    /**
+     * Base stress impact for the Nova Cannon multiblock.
+     * 
+     * At 512 SU/RPM, a Nova Cannon at 32 RPM would consume:
+     * 512 * 32 = 16,384 SU (base, without barrels)
+     * 
+     * This is double the standard cannon, reflecting its end-game status.
+     */
+    public static final float NOVA_CANNON_STRESS_IMPACT = 512.0f;
+    
+    /**
+     * Stress impact per heavy barrel segment.
+     * 
+     * Each heavy barrel segment adds to the Nova Cannon's stress cost.
+     * These are more expensive than standard barrels.
+     */
+    public static final float HEAVY_BARREL_STRESS_IMPACT = 64.0f;
+    
+    /**
+     * Stress impact per Nova Cannon frame block.
+     * 
+     * Each frame adds structural support but also stress cost.
+     */
+    public static final float NOVA_FRAME_STRESS_IMPACT = 16.0f;
+    
+    /**
+     * Stress multiplier for firing Nova Cannon.
+     * 
+     * Nova Cannon firing creates a massive stress spike.
+     */
+    public static final float NOVA_FIRING_STRESS_MULTIPLIER = 3.0f;
+    
     // ==================== MINIMUM SPEED REQUIREMENTS ====================
     
     /**
@@ -71,6 +111,39 @@ public final class StressConfig {
      */
     public static final float MAX_SPEED = 256.0f;
     
+    /**
+     * Minimum rotation speed for Nova Cannon.
+     * Higher than standard due to its power requirements.
+     */
+    public static final float NOVA_MIN_OPERATING_SPEED = 16.0f;
+    
+    // ==================== PROJECTILE STRESS MULTIPLIERS ====================
+    
+    /**
+     * Stress multiplier for standard projectiles (iron cannonball, etc.)
+     */
+    public static final float STANDARD_PROJECTILE_MULTIPLIER = 1.0f;
+    
+    /**
+     * Stress multiplier for heavy projectiles (steel cannonball, etc.)
+     */
+    public static final float HEAVY_PROJECTILE_MULTIPLIER = 1.2f;
+    
+    /**
+     * Stress multiplier for advanced projectiles (rocket-assisted, etc.)
+     */
+    public static final float ADVANCED_PROJECTILE_MULTIPLIER = 2.0f;
+    
+    /**
+     * Stress multiplier for high-yield shells.
+     */
+    public static final float HIGH_YIELD_PROJECTILE_MULTIPLIER = 3.0f;
+    
+    /**
+     * Stress multiplier for Nova shells.
+     */
+    public static final float NOVA_PROJECTILE_MULTIPLIER = 5.0f;
+    
     // ==================== CALCULATIONS ====================
     
     /**
@@ -87,6 +160,21 @@ public final class StressConfig {
     }
     
     /**
+     * Calculates the total stress impact for a Nova Cannon setup.
+     * 
+     * @param barrelCount Number of heavy barrel segments
+     * @param frameCount Number of frame blocks
+     * @param speed Current rotation speed
+     * @return Total stress impact in SU
+     */
+    public static float calculateNovaStressImpact(int barrelCount, int frameCount, float speed) {
+        float baseImpact = NOVA_CANNON_STRESS_IMPACT;
+        float barrelImpact = HEAVY_BARREL_STRESS_IMPACT * barrelCount;
+        float frameImpact = NOVA_FRAME_STRESS_IMPACT * frameCount;
+        return (baseImpact + barrelImpact + frameImpact) * Math.abs(speed);
+    }
+    
+    /**
      * Calculates the firing stress burst.
      * 
      * @param baseImpact The current operating stress
@@ -97,6 +185,27 @@ public final class StressConfig {
     }
     
     /**
+     * Calculates the firing stress burst for Nova Cannon.
+     * 
+     * @param baseImpact The current operating stress
+     * @return The temporary stress spike when firing Nova Cannon
+     */
+    public static float calculateNovaFiringStress(float baseImpact) {
+        return baseImpact * NOVA_FIRING_STRESS_MULTIPLIER;
+    }
+    
+    /**
+     * Calculates the stress cost for a specific projectile type.
+     * 
+     * @param baseStress The cannon's base stress
+     * @param projectileMultiplier The projectile type's stress multiplier
+     * @return Total stress cost for firing
+     */
+    public static float calculateProjectileStress(float baseStress, double projectileMultiplier) {
+        return (float) (baseStress * projectileMultiplier);
+    }
+    
+    /**
      * Checks if the given speed is sufficient for operation.
      * 
      * @param speed The current rotation speed
@@ -104,6 +213,16 @@ public final class StressConfig {
      */
     public static boolean isSpeedSufficient(float speed) {
         return Math.abs(speed) >= MIN_OPERATING_SPEED;
+    }
+    
+    /**
+     * Checks if the given speed is sufficient for Nova Cannon operation.
+     * 
+     * @param speed The current rotation speed
+     * @return True if the Nova Cannon can operate
+     */
+    public static boolean isNovaSpeedSufficient(float speed) {
+        return Math.abs(speed) >= NOVA_MIN_OPERATING_SPEED;
     }
     
     /**

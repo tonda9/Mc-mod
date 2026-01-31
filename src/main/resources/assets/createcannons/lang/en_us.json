@@ -17,6 +17,11 @@
     "item.createcannons.smoke_shell": "Smoke Shell",
     "item.createcannons.grapeshot": "Grapeshot",
     
+    "item.createcannons.high_yield_shell": "High-Yield Shell",
+    "item.createcannons.rocket_assisted_shell": "Rocket-Assisted Shell",
+    "item.createcannons.fragmentation_shell": "Fragmentation Shell",
+    "item.createcannons.nova_shell": "Nova Shell",
+    
     "item.createcannons.raw_cannonite": "Raw Cannonite",
     "item.createcannons.cannonite_ingot": "Cannonite Ingot",
     "item.createcannons.cannonite_nugget": "Cannonite Nugget",
@@ -24,10 +29,25 @@
     "item.createcannons.rocket_fuel": "Rocket Fuel",
     "item.createcannons.fuse": "Fuse",
     
+    "item.createcannons.raw_siegite": "Raw Siegite",
+    "item.createcannons.siegite_ingot": "Siegite Ingot",
+    "item.createcannons.siegite_nugget": "Siegite Nugget",
+    "item.createcannons.reinforced_siegite_plating": "Reinforced Siegite Plating",
+    "item.createcannons.nova_core_component": "Nova Core Component",
+    
     "item.createcannons.cannonite_ore": "Cannonite Ore",
     "item.createcannons.deepslate_cannonite_ore": "Deepslate Cannonite Ore",
     "item.createcannons.cannonite_block": "Block of Cannonite",
     "item.createcannons.raw_cannonite_block": "Block of Raw Cannonite",
+    
+    "item.createcannons.siegite_ore": "Siegite Ore",
+    "item.createcannons.deepslate_siegite_ore": "Deepslate Siegite Ore",
+    "item.createcannons.siegite_block": "Block of Siegite",
+    "item.createcannons.raw_siegite_block": "Block of Raw Siegite",
+    
+    "item.createcannons.nova_cannon_core": "Nova Cannon Core",
+    "item.createcannons.nova_cannon_frame": "Nova Cannon Frame",
+    "item.createcannons.heavy_barrel_segment": "Heavy Barrel Segment",
     
     "block.createcannons.kinetic_cannon": "Kinetic Cannon",
     "block.createcannons.cannon_barrel": "Cannon Barrel",
@@ -36,6 +56,13 @@
     "block.createcannons.deepslate_cannonite_ore": "Deepslate Cannonite Ore",
     "block.createcannons.cannonite_block": "Block of Cannonite",
     "block.createcannons.raw_cannonite_block": "Block of Raw Cannonite",
+    "block.createcannons.siegite_ore": "Siegite Ore",
+    "block.createcannons.deepslate_siegite_ore": "Deepslate Siegite Ore",
+    "block.createcannons.siegite_block": "Block of Siegite",
+    "block.createcannons.raw_siegite_block": "Block of Raw Siegite",
+    "block.createcannons.nova_cannon_core": "Nova Cannon Core",
+    "block.createcannons.nova_cannon_frame": "Nova Cannon Frame",
+    "block.createcannons.heavy_barrel_segment": "Heavy Barrel Segment",
     
     "itemGroup.createcannons.main": "Create Cannons",
     
@@ -52,6 +79,26 @@
     "tooltip.createcannons.smoke_cover": "Creates a smoke screen",
     "tooltip.createcannons.grapeshot_spread": "Fires multiple pellets in a spread",
     
+    "tooltip.createcannons.projectile_type": "Type: %s",
+    "tooltip.createcannons.high_yield_warning": "§4§lWARNING: Devastating AoE!",
+    "tooltip.createcannons.high_yield_effect": "Creates lingering damage zone",
+    "tooltip.createcannons.rocket_assisted_boost": "§aAccelerates mid-flight",
+    "tooltip.createcannons.rocket_assisted_range": "Extended range and accuracy",
+    "tooltip.createcannons.fragmentation_split": "Splits into %s fragments on impact",
+    "tooltip.createcannons.fragmentation_spread": "Effective against groups",
+    "tooltip.createcannons.nova_power": "§5§lULTIMATE DESTRUCTION",
+    "tooltip.createcannons.nova_requires": "§cRequires Nova Cannon multiblock",
+    
+    "tooltip.createcannons.nova_cannon_info": "§5End-game siege weapon",
+    "tooltip.createcannons.nova_cannon_stress": "§eBase Stress: 512 SU",
+    "tooltip.createcannons.multiblock_required": "§7Requires assembly:",
+    "tooltip.createcannons.multiblock_core": "  - 1 Nova Cannon Core",
+    "tooltip.createcannons.multiblock_frames": "  - 2+ Nova Cannon Frames",
+    "tooltip.createcannons.multiblock_barrels": "  - 3+ Heavy Barrel Segments",
+    
+    "tooltip.createcannons.siegite_info": "§dLate-game material",
+    "tooltip.createcannons.siegite_usage": "Used for Nova Cannon construction",
+    
     "message.createcannons.projectile_loaded": "Projectile loaded",
     "message.createcannons.projectile_already_loaded": "Projectile already loaded",
     "message.createcannons.charge_loaded": "Charge loaded",
@@ -61,6 +108,8 @@
     "message.createcannons.insufficient_stress": "Insufficient rotational force",
     "message.createcannons.cooldown": "Cooling down... %.1fs",
     "message.createcannons.fired": "FIRE!",
+    "message.createcannons.nova_incomplete": "Nova Cannon incomplete!",
+    "message.createcannons.nova_requires_shell": "Nova Cannon requires Nova Shell",
     
     "gui.createcannons.kinetic_cannon.title": "Kinetic Cannon",
     "gui.createcannons.kinetic_cannon.loaded": "Loaded: %s",
@@ -68,6 +117,11 @@
     "gui.createcannons.kinetic_cannon.cooldown": "Cooldown: %s",
     "gui.createcannons.kinetic_cannon.ready": "Ready to Fire",
     "gui.createcannons.kinetic_cannon.stress": "Stress: %s / %s SU",
+    
+    "gui.createcannons.nova_cannon.title": "Nova Cannon",
+    "gui.createcannons.nova_cannon.multiblock_status": "Structure: %s",
+    "gui.createcannons.nova_cannon.complete": "§aComplete",
+    "gui.createcannons.nova_cannon.incomplete": "§cIncomplete",
     
     "entity.createcannons.cannonball": "Cannonball"
 }

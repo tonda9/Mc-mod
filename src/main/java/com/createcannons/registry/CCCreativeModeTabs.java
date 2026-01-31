@@ -20,6 +20,18 @@ import net.neoforged.neoforge.registries.DeferredRegister;
  * 
  * Provides a dedicated creative tab that contains all mod items,
  * organized logically for easy discovery and access.
+ * 
+ * Item Organization:
+ * 1. Standard Cannon Blocks
+ * 2. Nova Cannon Multiblock Components
+ * 3. Cannonite Ore Blocks
+ * 4. Siegite Ore Blocks
+ * 5. Basic Projectiles
+ * 6. Advanced Projectiles
+ * 7. End-Game Ammunition
+ * 8. Cannonite Materials
+ * 9. Siegite Materials
+ * 10. Crafting Components
  */
 public class CCCreativeModeTabs {
     
@@ -33,10 +45,7 @@ public class CCCreativeModeTabs {
      * The main Create Cannons creative tab.
      * 
      * This tab contains all blocks, items, and components from the mod,
-     * organized in a logical order:
-     * 1. Cannon blocks (cannon, barrel, breech)
-     * 2. Projectiles (cannonballs, shells)
-     * 3. Components and crafting materials
+     * organized in progression order from early to end-game.
      */
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MAIN_TAB = 
             CREATIVE_MODE_TABS.register(
@@ -48,38 +57,64 @@ public class CCCreativeModeTabs {
                             .title(Component.translatable("itemGroup." + CreateCannons.MOD_ID + ".main"))
                             // Items to display in this tab
                             .displayItems((parameters, output) -> {
-                                // === Cannon Blocks ===
+                                // ========== STANDARD CANNON BLOCKS ==========
                                 output.accept(CCItems.KINETIC_CANNON.get());
                                 output.accept(CCItems.CANNON_BARREL.get());
                                 output.accept(CCItems.CANNON_BREECH.get());
                                 
-                                // === Ore Blocks ===
+                                // ========== NOVA CANNON MULTIBLOCK ==========
+                                output.accept(CCItems.NOVA_CANNON_CORE.get());
+                                output.accept(CCItems.NOVA_CANNON_FRAME.get());
+                                output.accept(CCItems.HEAVY_BARREL_SEGMENT.get());
+                                
+                                // ========== CANNONITE ORE BLOCKS ==========
                                 output.accept(CCItems.CANNONITE_ORE.get());
                                 output.accept(CCItems.DEEPSLATE_CANNONITE_ORE.get());
                                 output.accept(CCItems.CANNONITE_BLOCK.get());
                                 output.accept(CCItems.RAW_CANNONITE_BLOCK.get());
                                 
-                                // === Basic Projectiles ===
+                                // ========== SIEGITE ORE BLOCKS ==========
+                                output.accept(CCItems.SIEGITE_ORE.get());
+                                output.accept(CCItems.DEEPSLATE_SIEGITE_ORE.get());
+                                output.accept(CCItems.SIEGITE_BLOCK.get());
+                                output.accept(CCItems.RAW_SIEGITE_BLOCK.get());
+                                
+                                // ========== BASIC PROJECTILES (TIER 1-2) ==========
                                 output.accept(CCItems.IRON_CANNONBALL.get());
                                 output.accept(CCItems.STEEL_CANNONBALL.get());
                                 output.accept(CCItems.EXPLOSIVE_SHELL.get());
+                                output.accept(CCItems.SMOKE_SHELL.get());
+                                output.accept(CCItems.GRAPESHOT.get());
                                 
-                                // === Advanced Projectiles ===
+                                // ========== MID-TIER PROJECTILES (TIER 2-3) ==========
                                 output.accept(CCItems.NUCLEAR_SHELL.get());
                                 output.accept(CCItems.ROCKET_AMMO.get());
                                 output.accept(CCItems.INCENDIARY_SHELL.get());
                                 output.accept(CCItems.ARMOR_PIERCING_ROUND.get());
                                 output.accept(CCItems.CLUSTER_BOMB.get());
-                                output.accept(CCItems.SMOKE_SHELL.get());
-                                output.accept(CCItems.GRAPESHOT.get());
                                 
-                                // === Cannonite Materials ===
+                                // ========== ADVANCED PROJECTILES (TIER 3) ==========
+                                output.accept(CCItems.HIGH_YIELD_SHELL.get());
+                                output.accept(CCItems.ROCKET_ASSISTED_SHELL.get());
+                                output.accept(CCItems.FRAGMENTATION_SHELL.get());
+                                
+                                // ========== END-GAME AMMUNITION (TIER 4) ==========
+                                output.accept(CCItems.NOVA_SHELL.get());
+                                
+                                // ========== CANNONITE MATERIALS ==========
                                 output.accept(CCItems.RAW_CANNONITE.get());
                                 output.accept(CCItems.CANNONITE_INGOT.get());
                                 output.accept(CCItems.CANNONITE_NUGGET.get());
                                 output.accept(CCItems.ENRICHED_CANNONITE.get());
                                 
-                                // === Crafting Components ===
+                                // ========== SIEGITE MATERIALS ==========
+                                output.accept(CCItems.RAW_SIEGITE.get());
+                                output.accept(CCItems.SIEGITE_INGOT.get());
+                                output.accept(CCItems.SIEGITE_NUGGET.get());
+                                output.accept(CCItems.REINFORCED_SIEGITE_PLATING.get());
+                                output.accept(CCItems.NOVA_CORE_COMPONENT.get());
+                                
+                                // ========== CRAFTING COMPONENTS ==========
                                 output.accept(CCItems.CANNON_CASTING.get());
                                 output.accept(CCItems.INCOMPLETE_CANNON_BARREL.get());
                                 output.accept(CCItems.GUNPOWDER_CHARGE.get());

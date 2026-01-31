@@ -1,0 +1,22 @@
+{
+  "_comment": "Nova Cannon Frame - Structural support for Nova Cannon multiblock.",
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "PSP",
+    "S S",
+    "PSP"
+  ],
+  "key": {
+    "P": {
+      "item": "createcannons:reinforced_siegite_plating"
+    },
+    "S": {
+      "item": "create:shaft"
+    }
+  },
+  "result": {
+    "id": "createcannons:nova_cannon_frame",
+    "count": 2
+  }
+}

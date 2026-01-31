@@ -1,0 +1,5 @@
+{
+    "variants": {
+        "": { "model": "createcannons:block/raw_siegite_block" }
+    }
+}

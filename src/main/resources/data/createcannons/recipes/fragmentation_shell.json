@@ -1,0 +1,25 @@
+{
+  "_comment": "Fragmentation Shell - Anti-personnel shrapnel round that splits on impact.",
+  "type": "minecraft:crafting_shaped",
+  "category": "combat",
+  "pattern": [
+    " S ",
+    "NCN",
+    "NNN"
+  ],
+  "key": {
+    "S": {
+      "item": "createcannons:siegite_ingot"
+    },
+    "N": {
+      "tag": "c:nuggets/iron"
+    },
+    "C": {
+      "item": "createcannons:cannonite_ingot"
+    }
+  },
+  "result": {
+    "id": "createcannons:fragmentation_shell",
+    "count": 4
+  }
+}

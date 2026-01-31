@@ -1,0 +1,25 @@
+{
+  "_comment": "Nova Cannon Core - The central control block of the Nova Cannon multiblock.",
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "PCP",
+    "CGC",
+    "PCP"
+  ],
+  "key": {
+    "P": {
+      "item": "createcannons:reinforced_siegite_plating"
+    },
+    "C": {
+      "item": "createcannons:nova_core_component"
+    },
+    "G": {
+      "item": "create:precision_mechanism"
+    }
+  },
+  "result": {
+    "id": "createcannons:nova_cannon_core",
+    "count": 1
+  }
+}

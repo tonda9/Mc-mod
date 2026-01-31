@@ -4,13 +4,22 @@
  * This class handles registration of standalone items as well as
  * BlockItems for all registered blocks. Items include projectiles,
  * components, and ammunition.
+ * 
+ * Item Progression Tiers:
+ * - Tier 1 (Early): Iron cannonball, grapeshot, smoke shell
+ * - Tier 2 (Mid): Steel cannonball, explosive shell, incendiary, rocket
+ * - Tier 3 (Late): Armor piercing, cluster bomb, high-yield, fragmentation, rocket-assisted
+ * - Tier 4 (End): Nova shell (requires Nova Cannon multiblock)
  */
 package com.createcannons.registry;
 
 import com.createcannons.CreateCannons;
+import com.createcannons.entity.ProjectileType;
+import com.createcannons.item.AdvancedCannonballItem;
 import com.createcannons.item.CannonballItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -367,6 +376,216 @@ public class CCItems {
     public static final DeferredItem<BlockItem> RAW_CANNONITE_BLOCK = ITEMS.registerSimpleBlockItem(
             "raw_cannonite_block",
             CCBlocks.RAW_CANNONITE_BLOCK
+    );
+    
+    // ==================== NEW ADVANCED AMMUNITION (TIER 3) ====================
+    
+    /**
+     * High-Yield Shell - Warhammer-style devastating siege ammunition.
+     * 
+     * Creates massive AoE damage with lingering effects.
+     * Renamed from "Nuclear Shell" to follow thematic naming.
+     * 
+     * Stats:
+     * - Damage: 120
+     * - Explosion radius: 18.0
+     * - Stack size: 1
+     * - Stress multiplier: 3.0x
+     * - Special: Lingering damage effect, terrain deformation
+     * - Tier: Late game (requires enriched cannonite)
+     */
+    public static final DeferredItem<AdvancedCannonballItem> HIGH_YIELD_SHELL = ITEMS.register(
+            "high_yield_shell",
+            () -> new AdvancedCannonballItem(
+                    new Item.Properties().stacksTo(1).rarity(Rarity.EPIC),
+                    120.0f, 18.0f, ProjectileType.HIGH_YIELD
+            )
+    );
+    
+    /**
+     * Rocket-Assisted Shell - Self-propelled artillery round.
+     * 
+     * Accelerates mid-flight for extended range and accuracy.
+     * Uses sustained thrust after initial launch.
+     * 
+     * Stats:
+     * - Damage: 45
+     * - Explosion radius: 5.0
+     * - Stack size: 4
+     * - Stress multiplier: 2.5x
+     * - Special: Mid-flight acceleration, extended range, reduced gravity
+     * - Tier: Late game (requires siegite)
+     */
+    public static final DeferredItem<AdvancedCannonballItem> ROCKET_ASSISTED_SHELL = ITEMS.register(
+            "rocket_assisted_shell",
+            () -> new AdvancedCannonballItem(
+                    new Item.Properties().stacksTo(4).rarity(Rarity.RARE),
+                    45.0f, 5.0f, ProjectileType.ROCKET_ASSISTED
+            )
+    );
+    
+    /**
+     * Fragmentation Shell - Anti-personnel shrapnel round.
+     * 
+     * Splits into multiple fragments on impact, each causing damage.
+     * Effective against groups of enemies or area denial.
+     * 
+     * Stats:
+     * - Damage: 15 (per fragment, 12 fragments)
+     * - Explosion radius: 1.0 (per fragment)
+     * - Stack size: 4
+     * - Stress multiplier: 2.2x
+     * - Special: Splits into 12 fragments, shrapnel spread
+     * - Tier: Late game (requires siegite)
+     */
+    public static final DeferredItem<AdvancedCannonballItem> FRAGMENTATION_SHELL = ITEMS.register(
+            "fragmentation_shell",
+            () -> new AdvancedCannonballItem(
+                    new Item.Properties().stacksTo(4).rarity(Rarity.RARE),
+                    15.0f, 1.0f, ProjectileType.FRAGMENTATION
+            )
+    );
+    
+    // ==================== NOVA CANNON AMMUNITION (TIER 4 - END GAME) ====================
+    
+    /**
+     * Nova Shell - Ultimate siege ammunition for Nova Cannon.
+     * 
+     * Massive, slow-moving shell with devastating destruction.
+     * Only usable in the Nova Cannon multiblock structure.
+     * 
+     * Stats:
+     * - Damage: 200
+     * - Explosion radius: 25.0 (with 2.5x multiplier = 62.5 effective)
+     * - Stack size: 1
+     * - Stress multiplier: 5.0x
+     * - Special: Requires Nova Cannon, extreme AoE, visual effects
+     * - Tier: End game (requires complete Nova Cannon multiblock)
+     */
+    public static final DeferredItem<AdvancedCannonballItem> NOVA_SHELL = ITEMS.register(
+            "nova_shell",
+            () -> new AdvancedCannonballItem(
+                    new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant(),
+                    200.0f, 25.0f, ProjectileType.NOVA
+            )
+    );
+    
+    // ==================== SIEGITE ORE MATERIALS ====================
+    
+    /**
+     * Raw Siegite - unprocessed late-game ore material.
+     * 
+     * Dropped when mining siegite ore at deep levels.
+     * Must be smelted or processed to produce siegite ingots.
+     * Key material for Nova Cannon and advanced ammunition.
+     */
+    public static final DeferredItem<Item> RAW_SIEGITE = ITEMS.register(
+            "raw_siegite",
+            () -> new Item(new Item.Properties())
+    );
+    
+    /**
+     * Siegite Ingot - processed siegite metal.
+     * 
+     * The primary crafting material for Nova Cannon components
+     * and late-game ammunition. Harder to obtain than cannonite.
+     */
+    public static final DeferredItem<Item> SIEGITE_INGOT = ITEMS.register(
+            "siegite_ingot",
+            () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON))
+    );
+    
+    /**
+     * Siegite Nugget - small piece of siegite.
+     * 
+     * 9 nuggets can be crafted into an ingot.
+     * Useful for precise crafting recipes.
+     */
+    public static final DeferredItem<Item> SIEGITE_NUGGET = ITEMS.register(
+            "siegite_nugget",
+            () -> new Item(new Item.Properties())
+    );
+    
+    /**
+     * Reinforced Siegite Plating - advanced crafting component.
+     * 
+     * Used in Nova Cannon construction and heavy barrel segments.
+     * Requires siegite sheets pressed with brass.
+     */
+    public static final DeferredItem<Item> REINFORCED_SIEGITE_PLATING = ITEMS.register(
+            "reinforced_siegite_plating",
+            () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON))
+    );
+    
+    /**
+     * Nova Core Component - key part of Nova Cannon.
+     * 
+     * The central power regulation component for the Nova Cannon.
+     * Requires enriched cannonite and siegite to craft.
+     */
+    public static final DeferredItem<Item> NOVA_CORE_COMPONENT = ITEMS.register(
+            "nova_core_component",
+            () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant())
+    );
+    
+    // ==================== BLOCK ITEMS FOR SIEGITE ====================
+    
+    /**
+     * Block item for Siegite Ore.
+     */
+    public static final DeferredItem<BlockItem> SIEGITE_ORE = ITEMS.registerSimpleBlockItem(
+            "siegite_ore",
+            CCBlocks.SIEGITE_ORE
+    );
+    
+    /**
+     * Block item for Deepslate Siegite Ore.
+     */
+    public static final DeferredItem<BlockItem> DEEPSLATE_SIEGITE_ORE = ITEMS.registerSimpleBlockItem(
+            "deepslate_siegite_ore",
+            CCBlocks.DEEPSLATE_SIEGITE_ORE
+    );
+    
+    /**
+     * Block item for Siegite Block.
+     */
+    public static final DeferredItem<BlockItem> SIEGITE_BLOCK = ITEMS.registerSimpleBlockItem(
+            "siegite_block",
+            CCBlocks.SIEGITE_BLOCK
+    );
+    
+    /**
+     * Block item for Raw Siegite Block.
+     */
+    public static final DeferredItem<BlockItem> RAW_SIEGITE_BLOCK = ITEMS.registerSimpleBlockItem(
+            "raw_siegite_block",
+            CCBlocks.RAW_SIEGITE_BLOCK
+    );
+    
+    // ==================== BLOCK ITEMS FOR NOVA CANNON ====================
+    
+    /**
+     * Block item for Nova Cannon Core.
+     */
+    public static final DeferredItem<BlockItem> NOVA_CANNON_CORE = ITEMS.registerSimpleBlockItem(
+            "nova_cannon_core",
+            CCBlocks.NOVA_CANNON_CORE
+    );
+    
+    /**
+     * Block item for Nova Cannon Frame.
+     */
+    public static final DeferredItem<BlockItem> NOVA_CANNON_FRAME = ITEMS.registerSimpleBlockItem(
+            "nova_cannon_frame",
+            CCBlocks.NOVA_CANNON_FRAME
+    );
+    
+    /**
+     * Block item for Heavy Barrel Segment.
+     */
+    public static final DeferredItem<BlockItem> HEAVY_BARREL_SEGMENT = ITEMS.registerSimpleBlockItem(
+            "heavy_barrel_segment",
+            CCBlocks.HEAVY_BARREL_SEGMENT
     );
     
     // ==================== HELPER METHODS ====================

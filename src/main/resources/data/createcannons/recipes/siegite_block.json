@@ -1,0 +1,19 @@
+{
+  "_comment": "Siegite Block - 9 ingots compress to 1 block. Standard storage pattern.",
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "III",
+    "III",
+    "III"
+  ],
+  "key": {
+    "I": {
+      "item": "createcannons:siegite_ingot"
+    }
+  },
+  "result": {
+    "id": "createcannons:siegite_block",
+    "count": 1
+  }
+}

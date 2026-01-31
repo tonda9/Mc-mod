@@ -1,0 +1,25 @@
+{
+  "_comment": "Nova Core Component - Key part of Nova Cannon. Very expensive end-game item.",
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "PEP",
+    "ESE",
+    "PEP"
+  ],
+  "key": {
+    "P": {
+      "item": "createcannons:reinforced_siegite_plating"
+    },
+    "E": {
+      "item": "createcannons:enriched_cannonite"
+    },
+    "S": {
+      "item": "minecraft:nether_star"
+    }
+  },
+  "result": {
+    "id": "createcannons:nova_core_component",
+    "count": 1
+  }
+}

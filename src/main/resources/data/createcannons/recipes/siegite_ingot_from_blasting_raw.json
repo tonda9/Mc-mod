@@ -1,0 +1,14 @@
+{
+  "_comment": "Blast raw siegite to ingot - Faster blast furnace processing. 100 ticks, 1.5 XP.",
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "ingredient": {
+    "item": "createcannons:raw_siegite"
+  },
+  "result": {
+    "id": "createcannons:siegite_ingot",
+    "count": 1
+  },
+  "experience": 1.5,
+  "cookingtime": 100
+}
