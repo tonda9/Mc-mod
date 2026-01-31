@@ -48,7 +48,6 @@
     "item.createcannons.nova_cannon_core": "Nova Cannon Core",
     "item.createcannons.nova_cannon_frame": "Nova Cannon Frame",
     "item.createcannons.heavy_barrel_segment": "Heavy Barrel Segment",
-    
     "item.createcannons.raw_tungsten": "Raw Tungsten",
     "item.createcannons.tungsten_ingot": "Tungsten Ingot",
     "item.createcannons.tungsten_nugget": "Tungsten Nugget",
@@ -76,7 +75,6 @@
     "item.createcannons.shell_800mm_annihilator": "800mm Annihilator Shell",
     "item.createcannons.shell_1000mm_cataclysm": "1000mm Cataclysm Shell",
     "item.createcannons.shell_1000mm_worldbreaker": "1000mm Worldbreaker Shell",
-    
     "block.createcannons.kinetic_cannon": "Kinetic Cannon",
     "block.createcannons.cannon_barrel": "Cannon Barrel",
     "block.createcannons.cannon_breech": "Cannon Breech",
@@ -129,11 +127,9 @@
     "block.createcannons.autoloader": "Autoloader",
     "block.createcannons.targeting_computer": "Targeting Computer",
     "block.createcannons.gun_stabilizer": "Gun Stabilizer",
-    
     "itemGroup.createcannons.main": "Create Cannons",
     "itemGroup.createcannons.ammunition": "Create Cannons - Ammunition",
     "itemGroup.createcannons.armor": "Create Cannons - Armor",
-    
     "tooltip.createcannons.damage": "Damage: %s",
     "tooltip.createcannons.explosion_radius": "Explosion Radius: %s",
     "tooltip.createcannons.cannonball_usage": "Load into a Kinetic Cannon to fire",
