@@ -1,0 +1,25 @@
+{
+  "_comment": "Armor Piercing Round - Diamond tip with cannonite body for penetration. Late game.",
+  "type": "minecraft:crafting_shaped",
+  "category": "combat",
+  "pattern": [
+    " D ",
+    "CIC",
+    " C "
+  ],
+  "key": {
+    "D": {
+      "tag": "c:gems/diamond"
+    },
+    "C": {
+      "item": "createcannons:cannonite_ingot"
+    },
+    "I": {
+      "tag": "c:ingots/iron"
+    }
+  },
+  "result": {
+    "id": "createcannons:armor_piercing_round",
+    "count": 4
+  }
+}

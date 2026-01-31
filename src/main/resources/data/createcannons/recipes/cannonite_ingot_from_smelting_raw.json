@@ -1,0 +1,14 @@
+{
+  "_comment": "Smelt raw cannonite to ingot - Standard furnace processing. 200 ticks, 1.0 XP.",
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "ingredient": {
+    "item": "createcannons:raw_cannonite"
+  },
+  "result": {
+    "id": "createcannons:cannonite_ingot",
+    "count": 1
+  },
+  "experience": 1.0,
+  "cookingtime": 200
+}

@@ -1,0 +1,19 @@
+{
+  "_comment": "Raw Cannonite Block - 9 raw ore compress to 1 block for storage.",
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "RRR",
+    "RRR",
+    "RRR"
+  ],
+  "key": {
+    "R": {
+      "item": "createcannons:raw_cannonite"
+    }
+  },
+  "result": {
+    "id": "createcannons:raw_cannonite_block",
+    "count": 1
+  }
+}

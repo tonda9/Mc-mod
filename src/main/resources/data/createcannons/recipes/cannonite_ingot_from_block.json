@@ -1,0 +1,14 @@
+{
+  "_comment": "Cannonite Ingot from Block - Unpack storage block to 9 ingots.",
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "createcannons:cannonite_block"
+    }
+  ],
+  "result": {
+    "id": "createcannons:cannonite_ingot",
+    "count": 9
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "_comment": "Kinetic Cannon - Mid-to-late game Create item. Requires brass casing (andesite alloy + copper) and shaft for mechanical integration.",
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "IBI",
+    "ICI",
+    "SAS"
+  ],
+  "key": {
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "B": {
+      "item": "create:brass_casing"
+    },
+    "C": {
+      "item": "createcannons:cannon_casting"
+    },
+    "S": {
+      "tag": "c:cobblestones/normal"
+    },
+    "A": {
+      "item": "create:shaft"
+    }
+  },
+  "result": {
+    "id": "createcannons:kinetic_cannon",
+    "count": 1
+  }
+}

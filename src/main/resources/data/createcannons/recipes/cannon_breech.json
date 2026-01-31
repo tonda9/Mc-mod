@@ -1,0 +1,22 @@
+{
+  "_comment": "Cannon Breech - Loading mechanism requiring brass funnel (Create item-handling) and iron sheets.",
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "SFS",
+    "S S",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "item": "create:iron_sheet"
+    },
+    "F": {
+      "item": "create:brass_funnel"
+    }
+  },
+  "result": {
+    "id": "createcannons:cannon_breech",
+    "count": 1
+  }
+}

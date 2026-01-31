@@ -1,0 +1,25 @@
+{
+  "_comment": "Nuclear Shell - End-game ammunition. Requires enriched cannonite (Wither gate) + TNT. Very expensive, single output.",
+  "type": "minecraft:crafting_shaped",
+  "category": "combat",
+  "pattern": [
+    "ECE",
+    "CTC",
+    "ECE"
+  ],
+  "key": {
+    "E": {
+      "item": "createcannons:enriched_cannonite"
+    },
+    "C": {
+      "item": "createcannons:cannonite_ingot"
+    },
+    "T": {
+      "item": "minecraft:tnt"
+    }
+  },
+  "result": {
+    "id": "createcannons:nuclear_shell",
+    "count": 1
+  }
+}

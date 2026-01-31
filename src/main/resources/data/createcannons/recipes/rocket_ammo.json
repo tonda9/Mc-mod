@@ -1,0 +1,25 @@
+{
+  "_comment": "Rocket Ammo - Self-propelled projectile. Requires rocket fuel and cannonite tip.",
+  "type": "minecraft:crafting_shaped",
+  "category": "combat",
+  "pattern": [
+    " C ",
+    "RFR",
+    "RRR"
+  ],
+  "key": {
+    "C": {
+      "item": "createcannons:cannonite_ingot"
+    },
+    "R": {
+      "item": "createcannons:rocket_fuel"
+    },
+    "F": {
+      "item": "createcannons:fuse"
+    }
+  },
+  "result": {
+    "id": "createcannons:rocket_ammo",
+    "count": 2
+  }
+}

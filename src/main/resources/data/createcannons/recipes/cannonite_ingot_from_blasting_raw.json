@@ -1,0 +1,14 @@
+{
+  "_comment": "Blast raw cannonite to ingot - Faster blast furnace processing. 100 ticks, 1.0 XP.",
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "ingredient": {
+    "item": "createcannons:raw_cannonite"
+  },
+  "result": {
+    "id": "createcannons:cannonite_ingot",
+    "count": 1
+  },
+  "experience": 1.0,
+  "cookingtime": 100
+}

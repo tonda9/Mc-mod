@@ -1,0 +1,19 @@
+{
+  "_comment": "Incomplete Cannon Barrel - Intermediate for sequenced assembly. Iron sheets in tube formation.",
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "S S",
+    "S S",
+    "S S"
+  ],
+  "key": {
+    "S": {
+      "item": "create:iron_sheet"
+    }
+  },
+  "result": {
+    "id": "createcannons:incomplete_cannon_barrel",
+    "count": 1
+  }
+}

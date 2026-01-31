@@ -1,0 +1,19 @@
+{
+  "_comment": "Iron Cannonball - Basic ammo. Iron nuggets form a sphere, yielding 8 for efficiency at mid-game.",
+  "type": "minecraft:crafting_shaped",
+  "category": "combat",
+  "pattern": [
+    " N ",
+    "NNN",
+    " N "
+  ],
+  "key": {
+    "N": {
+      "tag": "c:nuggets/iron"
+    }
+  },
+  "result": {
+    "id": "createcannons:iron_cannonball",
+    "count": 8
+  }
+}

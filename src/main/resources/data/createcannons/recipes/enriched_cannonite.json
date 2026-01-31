@@ -1,0 +1,25 @@
+{
+  "_comment": "Enriched Cannonite - Late game material. Requires nether star (Wither boss) + cannonite + blaze powder.",
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "CBC",
+    "BNB",
+    "CBC"
+  ],
+  "key": {
+    "C": {
+      "item": "createcannons:cannonite_ingot"
+    },
+    "B": {
+      "item": "minecraft:blaze_powder"
+    },
+    "N": {
+      "item": "minecraft:nether_star"
+    }
+  },
+  "result": {
+    "id": "createcannons:enriched_cannonite",
+    "count": 4
+  }
+}
