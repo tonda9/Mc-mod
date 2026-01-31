@@ -719,9 +719,10 @@ public class CannonballEntity extends Projectile {
     }
     
     /**
-     * @deprecated Use createHighYieldEffects() instead
+     * @deprecated Use createHighYieldEffects() instead. This method was renamed to
+     * avoid real-world nuclear terminology per design guidelines.
      */
-    @Deprecated
+    @Deprecated(since = "1.0.0", forRemoval = true)
     private void createNuclearEffects() {
         createHighYieldEffects();
     }

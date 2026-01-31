@@ -259,9 +259,10 @@ public enum ProjectileType {
     }
     
     /**
-     * @deprecated Use isHighYield() instead
+     * @deprecated Use isHighYield() instead. This method was renamed to avoid
+     * real-world nuclear terminology per design guidelines.
      */
-    @Deprecated
+    @Deprecated(since = "1.0.0", forRemoval = true)
     public boolean isNuclear() {
         return isHighYield;
     }

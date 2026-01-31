@@ -261,10 +261,15 @@ public class CCBlocks {
      * - Only fires Nova Shells
      * 
      * Tier: End-game
+     * 
+     * NOTE: This currently uses a generic Block. Full multiblock validation,
+     * stress management, and firing logic will be implemented in a future
+     * update with a dedicated NovaCannonCoreBlock class and BlockEntity.
+     * See: https://github.com/tonda9/Mc-mod/issues - tracking issue TBD
      */
     public static final DeferredBlock<Block> NOVA_CANNON_CORE = BLOCKS.register(
             "nova_cannon_core",
-            () -> new Block( // TODO: Replace with NovaCannonCoreBlock when implemented
+            () -> new Block(
                     BlockBehaviour.Properties.of()
                             .mapColor(MapColor.COLOR_BLACK)
                             .strength(8.0f, 12.0f)
