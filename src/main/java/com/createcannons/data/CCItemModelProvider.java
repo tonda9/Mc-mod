@@ -41,15 +41,32 @@ public class CCItemModelProvider extends ItemModelProvider {
      */
     @Override
     protected void registerModels() {
-        // Projectile items - simple 2D generated textures
+        // Basic projectile items
         simpleItem(CCItems.IRON_CANNONBALL);
         simpleItem(CCItems.STEEL_CANNONBALL);
         simpleItem(CCItems.EXPLOSIVE_SHELL);
         
-        // Component items
+        // Advanced projectile items
+        simpleItem(CCItems.NUCLEAR_SHELL);
+        simpleItem(CCItems.ROCKET_AMMO);
+        simpleItem(CCItems.INCENDIARY_SHELL);
+        simpleItem(CCItems.ARMOR_PIERCING_ROUND);
+        simpleItem(CCItems.CLUSTER_BOMB);
+        simpleItem(CCItems.SMOKE_SHELL);
+        simpleItem(CCItems.GRAPESHOT);
+        
+        // Cannonite materials
+        simpleItem(CCItems.RAW_CANNONITE);
+        simpleItem(CCItems.CANNONITE_INGOT);
+        simpleItem(CCItems.CANNONITE_NUGGET);
+        simpleItem(CCItems.ENRICHED_CANNONITE);
+        
+        // Crafting component items
         simpleItem(CCItems.CANNON_CASTING);
         simpleItem(CCItems.INCOMPLETE_CANNON_BARREL);
         simpleItem(CCItems.GUNPOWDER_CHARGE);
+        simpleItem(CCItems.ROCKET_FUEL);
+        simpleItem(CCItems.FUSE);
         
         // Block items are handled by BlockStateProvider
     }

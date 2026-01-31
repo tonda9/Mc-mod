@@ -9,7 +9,10 @@ package com.createcannons.registry;
 
 import com.createcannons.CreateCannons;
 import com.createcannons.block.KineticCannonBlock;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DropExperienceBlock;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import net.neoforged.bus.api.IEventBus;
@@ -89,6 +92,79 @@ public class CCBlocks {
                             .mapColor(MapColor.METAL)
                             .strength(5.0f, 6.0f)
                             .requiresCorrectToolForDrops()
+            )
+    );
+    
+    // ==================== ORE BLOCKS ====================
+    
+    /**
+     * Cannonite Ore - a new ore found deep underground.
+     * 
+     * This rare ore is essential for crafting advanced ammunition.
+     * Found at Y levels -64 to 16, primarily in deepslate.
+     * Drops 1-3 Raw Cannonite when mined with iron pickaxe or better.
+     */
+    public static final DeferredBlock<Block> CANNONITE_ORE = BLOCKS.register(
+            "cannonite_ore",
+            () -> new DropExperienceBlock(
+                    UniformInt.of(3, 7),
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.STONE)
+                            .strength(3.0f, 3.0f)
+                            .requiresCorrectToolForDrops()
+                            .sound(SoundType.STONE)
+            )
+    );
+    
+    /**
+     * Deepslate Cannonite Ore - variant found in deepslate.
+     * 
+     * Slightly harder to mine than regular cannonite ore.
+     * More common at very low Y levels.
+     */
+    public static final DeferredBlock<Block> DEEPSLATE_CANNONITE_ORE = BLOCKS.register(
+            "deepslate_cannonite_ore",
+            () -> new DropExperienceBlock(
+                    UniformInt.of(3, 7),
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.DEEPSLATE)
+                            .strength(4.5f, 3.0f)
+                            .requiresCorrectToolForDrops()
+                            .sound(SoundType.DEEPSLATE)
+            )
+    );
+    
+    /**
+     * Cannonite Block - storage block for cannonite ingots.
+     * 
+     * Crafted from 9 cannonite ingots. Can be used as decoration
+     * or for compact storage of the material.
+     */
+    public static final DeferredBlock<Block> CANNONITE_BLOCK = BLOCKS.register(
+            "cannonite_block",
+            () -> new Block(
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.COLOR_GREEN)
+                            .strength(5.0f, 6.0f)
+                            .requiresCorrectToolForDrops()
+                            .sound(SoundType.METAL)
+            )
+    );
+    
+    /**
+     * Raw Cannonite Block - storage block for raw cannonite.
+     * 
+     * Crafted from 9 raw cannonite. Useful for bulk storage
+     * before processing the ore.
+     */
+    public static final DeferredBlock<Block> RAW_CANNONITE_BLOCK = BLOCKS.register(
+            "raw_cannonite_block",
+            () -> new Block(
+                    BlockBehaviour.Properties.of()
+                            .mapColor(MapColor.COLOR_GREEN)
+                            .strength(4.0f, 5.0f)
+                            .requiresCorrectToolForDrops()
+                            .sound(SoundType.STONE)
             )
     );
     

@@ -2,18 +2,21 @@
  * Cannonball Entity - The projectile fired by kinetic cannons.
  * 
  * This entity represents a cannonball in flight. It implements:
- * - Ballistic physics with gravity
+ * - Ballistic physics with gravity and air resistance
  * - Collision detection with blocks and entities
- * - Explosion on impact
+ * - Explosion on impact with configurable effects
  * - Damage to entities based on velocity
+ * - Multiple projectile types with different physics
+ * - Special effects (fire, penetration, nuclear, etc.)
  * 
- * The cannonball uses realistic physics, accounting for gravity
- * and air resistance to create believable trajectories.
+ * The cannonball uses realistic physics, accounting for gravity,
+ * air resistance, and projectile mass to create believable trajectories.
  */
 package com.createcannons.entity;
 
 import com.createcannons.CreateCannons;
 import com.createcannons.registry.CCEntityTypes;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -22,6 +25,9 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.AreaEffectCloud;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -30,11 +36,15 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+
+import java.util.List;
 
 /**
  * Cannonball projectile entity.
@@ -42,6 +52,14 @@ import net.minecraft.world.phys.Vec3;
  * This entity handles the flight physics and impact behavior of
  * cannonballs fired from kinetic cannons. It follows a ballistic
  * trajectory affected by gravity and explodes on impact.
+ * 
+ * Enhanced physics system supports:
+ * - Variable gravity based on projectile type
+ * - Air resistance affected by projectile mass
+ * - Block penetration for armor piercing rounds
+ * - Fire effects for incendiary shells
+ * - Nuclear explosions with radiation effects
+ * - Cluster bomb splitting mechanics
  */
 public class CannonballEntity extends Projectile {
     
@@ -59,23 +77,29 @@ public class CannonballEntity extends Projectile {
     private static final EntityDataAccessor<Float> DATA_EXPLOSION_RADIUS = 
             SynchedEntityData.defineId(CannonballEntity.class, EntityDataSerializers.FLOAT);
     
+    /**
+     * Synced projectile type ordinal for physics behavior.
+     */
+    private static final EntityDataAccessor<Integer> DATA_PROJECTILE_TYPE = 
+            SynchedEntityData.defineId(CannonballEntity.class, EntityDataSerializers.INT);
+    
     // ==================== CONSTANTS ====================
     
     /**
-     * Gravity acceleration in blocks per tick squared.
-     * Standard Minecraft gravity is ~0.04.
+     * Base gravity acceleration in blocks per tick squared.
+     * Modified by projectile type's gravity multiplier.
      */
-    private static final double GRAVITY = 0.05;
+    private static final double BASE_GRAVITY = 0.05;
     
     /**
-     * Air resistance factor. Higher values = more drag.
-     * Applied as velocity *= (1 - AIR_RESISTANCE) each tick.
+     * Base air resistance factor.
+     * Modified by projectile type's air resistance multiplier.
      */
-    private static final double AIR_RESISTANCE = 0.01;
+    private static final double BASE_AIR_RESISTANCE = 0.01;
     
     /**
      * Minimum velocity before the cannonball is considered "stopped".
-     * Below this, the cannonball will despawn.
+     * Below this, the cannonball will despawn or explode.
      */
     private static final double MIN_VELOCITY = 0.1;
     
@@ -84,6 +108,18 @@ public class CannonballEntity extends Projectile {
      * Prevents orphaned projectiles from existing forever.
      */
     private static final int MAX_LIFETIME_TICKS = 600; // 30 seconds
+    
+    /**
+     * Wind effect strength - adds slight random deviation.
+     * Simulates environmental effects on trajectory.
+     */
+    private static final double WIND_STRENGTH = 0.002;
+    
+    /**
+     * Blocks that can be penetrated by armor piercing rounds.
+     * These blocks are destroyed when hit by AP rounds.
+     */
+    private static final float PENETRATION_THRESHOLD = 3.0f; // Hardness threshold
     
     // ==================== STATE ====================
     
@@ -100,6 +136,11 @@ public class CannonballEntity extends Projectile {
     private float explosionRadius = 2.0f;
     
     /**
+     * The type of this projectile, determining physics behavior.
+     */
+    private ProjectileType projectileType = ProjectileType.STANDARD;
+    
+    /**
      * Ticks this entity has existed.
      * Used for lifetime management.
      */
@@ -110,6 +151,17 @@ public class CannonballEntity extends Projectile {
      * Prevents double explosions.
      */
     private boolean hasExploded = false;
+    
+    /**
+     * Number of blocks penetrated (for armor piercing).
+     * Limits how many blocks can be penetrated.
+     */
+    private int blocksPenetrated = 0;
+    
+    /**
+     * Maximum blocks that can be penetrated.
+     */
+    private static final int MAX_PENETRATION = 3;
     
     // ==================== CONSTRUCTORS ====================
     
@@ -152,6 +204,7 @@ public class CannonballEntity extends Projectile {
         super.defineSynchedData(builder);
         builder.define(DATA_DAMAGE, 20.0f);
         builder.define(DATA_EXPLOSION_RADIUS, 2.0f);
+        builder.define(DATA_PROJECTILE_TYPE, 0);
     }
     
     // ==================== TICK LOGIC ====================
@@ -176,6 +229,16 @@ public class CannonballEntity extends Projectile {
         // Apply physics
         applyPhysics();
         
+        // Check for cluster bomb split (at apex of trajectory)
+        if (projectileType == ProjectileType.CLUSTER && ticksAlive > 20) {
+            Vec3 vel = getDeltaMovement();
+            // Split when velocity is mostly horizontal (near apex)
+            if (vel.y > -0.1 && vel.y < 0.1 && !hasExploded) {
+                splitClusterBomb();
+                return;
+            }
+        }
+        
         // Check for collisions
         checkCollisions();
         
@@ -198,18 +261,82 @@ public class CannonballEntity extends Projectile {
     
     /**
      * Applies physics forces to the cannonball.
-     * Handles gravity and air resistance.
+     * Handles gravity, air resistance, and wind based on projectile type.
      */
     private void applyPhysics() {
         Vec3 velocity = getDeltaMovement();
         
+        // Calculate effective gravity based on projectile type
+        double effectiveGravity = BASE_GRAVITY * projectileType.getGravityMultiplier();
+        
+        // Calculate effective air resistance based on projectile type
+        double effectiveAirResistance = BASE_AIR_RESISTANCE * projectileType.getAirResistanceMultiplier();
+        
         // Apply gravity (downward acceleration)
-        velocity = velocity.add(0, -GRAVITY, 0);
+        velocity = velocity.add(0, -effectiveGravity, 0);
         
         // Apply air resistance (velocity dampening)
-        velocity = velocity.scale(1 - AIR_RESISTANCE);
+        velocity = velocity.scale(1 - effectiveAirResistance);
+        
+        // Apply wind effect (slight random deviation for realism)
+        if (level().random.nextFloat() < 0.3) {
+            double windX = (level().random.nextDouble() - 0.5) * WIND_STRENGTH;
+            double windZ = (level().random.nextDouble() - 0.5) * WIND_STRENGTH;
+            velocity = velocity.add(windX, 0, windZ);
+        }
+        
+        // Rocket ammo gets slight thrust to maintain velocity
+        if (projectileType == ProjectileType.ROCKET && ticksAlive < 100) {
+            Vec3 direction = velocity.normalize();
+            velocity = velocity.add(direction.scale(0.01));
+        }
         
         setDeltaMovement(velocity);
+    }
+    
+    /**
+     * Splits a cluster bomb into multiple smaller projectiles.
+     */
+    private void splitClusterBomb() {
+        if (level().isClientSide || hasExploded) {
+            return;
+        }
+        
+        hasExploded = true;
+        
+        // Create 8 smaller projectiles in a spread pattern
+        for (int i = 0; i < 8; i++) {
+            CannonballEntity cluster = new CannonballEntity(
+                    CCEntityTypes.CANNONBALL.get(),
+                    level(),
+                    this.getX(), this.getY(), this.getZ()
+            );
+            
+            // Set reduced damage for cluster pieces
+            cluster.setDamage(damage * 0.5f);
+            cluster.setExplosionRadius(explosionRadius * 0.5f);
+            cluster.setProjectileType(ProjectileType.STANDARD);
+            
+            // Calculate spread velocity
+            double angle = (2 * Math.PI * i) / 8;
+            double spreadX = Math.cos(angle) * 0.3;
+            double spreadZ = Math.sin(angle) * 0.3;
+            Vec3 baseVel = getDeltaMovement();
+            cluster.setDeltaMovement(
+                    baseVel.x * 0.5 + spreadX,
+                    baseVel.y * 0.5 - 0.1,
+                    baseVel.z * 0.5 + spreadZ
+            );
+            
+            level().addFreshEntity(cluster);
+        }
+        
+        // Play split sound
+        level().playSound(null, this.getX(), this.getY(), this.getZ(),
+                SoundEvents.FIREWORK_ROCKET_BLAST, SoundSource.BLOCKS,
+                1.0f, 1.0f);
+        
+        this.discard();
     }
     
     /**
@@ -307,9 +434,32 @@ public class CannonballEntity extends Projectile {
         }
         
         BlockState hitState = level().getBlockState(result.getBlockPos());
+        BlockPos hitPos = result.getBlockPos();
         
         CreateCannons.LOGGER.debug("Cannonball hit block {} at {}", 
-                hitState.getBlock().getName().getString(), result.getBlockPos());
+                hitState.getBlock().getName().getString(), hitPos);
+        
+        // Check for armor piercing penetration
+        if (projectileType.canPenetrate() && blocksPenetrated < MAX_PENETRATION) {
+            float hardness = hitState.getDestroySpeed(level(), hitPos);
+            
+            if (hardness >= 0 && hardness < PENETRATION_THRESHOLD) {
+                // Penetrate this block
+                level().destroyBlock(hitPos, false);
+                blocksPenetrated++;
+                
+                // Play penetration sound
+                level().playSound(null, hitPos.getX(), hitPos.getY(), hitPos.getZ(),
+                        SoundEvents.IRON_GOLEM_DAMAGE, SoundSource.BLOCKS,
+                        1.0f, 0.5f);
+                
+                // Reduce velocity slightly
+                setDeltaMovement(getDeltaMovement().scale(0.8));
+                
+                // Don't explode yet, continue through
+                return;
+            }
+        }
         
         // Explode on impact
         explode();
@@ -320,6 +470,7 @@ public class CannonballEntity extends Projectile {
     /**
      * Creates an explosion at the cannonball's position.
      * Called when the cannonball impacts something or comes to rest.
+     * Handles different explosion types based on projectile type.
      */
     private void explode() {
         if (hasExploded || level().isClientSide) {
@@ -328,42 +479,213 @@ public class CannonballEntity extends Projectile {
         
         hasExploded = true;
         
-        // Create explosion
-        // Parameters: level, entity, x, y, z, radius, fire, mode
+        // Handle smoke shell - no explosion, just smoke
+        if (projectileType == ProjectileType.SMOKE) {
+            createSmokeCloud();
+            this.discard();
+            return;
+        }
+        
+        // Handle grapeshot - no explosion, already dealt damage
+        if (projectileType == ProjectileType.GRAPESHOT) {
+            this.discard();
+            return;
+        }
+        
+        // Determine if explosion should cause fire (incendiary shells)
+        boolean causesFire = projectileType.causesFire();
+        
+        // Create explosion with appropriate interaction type
+        Level.ExplosionInteraction interactionType = projectileType.isNuclear() 
+                ? Level.ExplosionInteraction.MOB 
+                : Level.ExplosionInteraction.TNT;
+        
+        // Nuclear shells get a larger explosion
+        float effectiveRadius = projectileType.isNuclear() 
+                ? explosionRadius * 1.5f 
+                : explosionRadius;
+        
+        // Create the main explosion
         level().explode(
-                this,                               // Source entity
-                this.getX(), this.getY(), this.getZ(), // Position
-                explosionRadius,                    // Radius
-                Level.ExplosionInteraction.TNT      // Explosion type (destroys blocks)
+                this,
+                this.getX(), this.getY(), this.getZ(),
+                effectiveRadius,
+                causesFire,
+                interactionType
         );
         
-        // Play explosion sound (in case the explosion itself doesn't)
+        // Nuclear shells create additional effects
+        if (projectileType.isNuclear()) {
+            createNuclearEffects();
+        }
+        
+        // Incendiary shells set additional fires
+        if (projectileType.causesFire()) {
+            createFireArea();
+        }
+        
+        // Play explosion sound
         level().playSound(null, this.getX(), this.getY(), this.getZ(),
                 SoundEvents.GENERIC_EXPLODE.value(), SoundSource.BLOCKS,
                 2.0f, 0.9f + level().random.nextFloat() * 0.2f);
         
         CreateCannons.LOGGER.debug("Cannonball exploded at {} with radius {}", 
-                position(), explosionRadius);
+                position(), effectiveRadius);
         
         // Remove the entity
         this.discard();
+    }
+    
+    /**
+     * Creates a smoke cloud effect for smoke shells.
+     */
+    private void createSmokeCloud() {
+        if (level() instanceof ServerLevel serverLevel) {
+            // Create lingering smoke effect
+            AreaEffectCloud cloud = new AreaEffectCloud(level(), this.getX(), this.getY(), this.getZ());
+            cloud.setRadius(5.0f);
+            cloud.setDuration(200); // 10 seconds
+            cloud.setRadiusOnUse(-0.5f);
+            cloud.setWaitTime(0);
+            cloud.setParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE);
+            level().addFreshEntity(cloud);
+            
+            // Spawn immediate smoke particles
+            for (int i = 0; i < 50; i++) {
+                double offsetX = (level().random.nextDouble() - 0.5) * 4;
+                double offsetY = level().random.nextDouble() * 3;
+                double offsetZ = (level().random.nextDouble() - 0.5) * 4;
+                serverLevel.sendParticles(
+                        ParticleTypes.CAMPFIRE_COSY_SMOKE,
+                        this.getX() + offsetX, this.getY() + offsetY, this.getZ() + offsetZ,
+                        1, 0.1, 0.1, 0.1, 0.02
+                );
+            }
+        }
+        
+        // Play smoke sound
+        level().playSound(null, this.getX(), this.getY(), this.getZ(),
+                SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS,
+                1.0f, 1.0f);
+    }
+    
+    /**
+     * Creates nuclear explosion effects - radiation and lingering damage.
+     */
+    private void createNuclearEffects() {
+        if (level() instanceof ServerLevel serverLevel) {
+            // Create radiation area effect
+            AreaEffectCloud radiation = new AreaEffectCloud(level(), this.getX(), this.getY(), this.getZ());
+            radiation.setRadius(10.0f);
+            radiation.setDuration(600); // 30 seconds
+            radiation.setRadiusOnUse(-0.2f);
+            radiation.setWaitTime(10);
+            radiation.addEffect(new MobEffectInstance(MobEffects.WITHER, 100, 1));
+            radiation.addEffect(new MobEffectInstance(MobEffects.POISON, 200, 2));
+            radiation.setParticle(ParticleTypes.SOUL_FIRE_FLAME);
+            level().addFreshEntity(radiation);
+            
+            // Create massive particle effect
+            for (int i = 0; i < 100; i++) {
+                double angle = level().random.nextDouble() * Math.PI * 2;
+                double distance = level().random.nextDouble() * 15;
+                double height = level().random.nextDouble() * 20;
+                serverLevel.sendParticles(
+                        ParticleTypes.EXPLOSION,
+                        this.getX() + Math.cos(angle) * distance,
+                        this.getY() + height,
+                        this.getZ() + Math.sin(angle) * distance,
+                        1, 0, 0, 0, 0
+                );
+            }
+        }
+    }
+    
+    /**
+     * Creates fire in the area for incendiary shells.
+     */
+    private void createFireArea() {
+        int radius = (int) explosionRadius + 2;
+        BlockPos center = this.blockPosition();
+        
+        for (int x = -radius; x <= radius; x++) {
+            for (int y = -radius; y <= radius; y++) {
+                for (int z = -radius; z <= radius; z++) {
+                    if (x * x + y * y + z * z <= radius * radius) {
+                        BlockPos pos = center.offset(x, y, z);
+                        BlockState state = level().getBlockState(pos);
+                        
+                        // Place fire on flammable or air blocks
+                        if (state.isAir() && level().random.nextFloat() < 0.3) {
+                            BlockState below = level().getBlockState(pos.below());
+                            if (below.isSolid()) {
+                                level().setBlock(pos, Blocks.FIRE.defaultBlockState(), 3);
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
     
     // ==================== PARTICLES ====================
     
     /**
      * Spawns trail particles behind the cannonball.
-     * Creates a smoke trail effect during flight.
+     * Particle type depends on projectile type.
      */
     private void spawnTrailParticles() {
         if (level() instanceof ServerLevel serverLevel) {
-            // Spawn smoke particles
+            // Rocket trail - intense flame effect
+            if (projectileType.hasRocketTrail()) {
+                serverLevel.sendParticles(
+                        ParticleTypes.FLAME,
+                        this.getX(), this.getY(), this.getZ(),
+                        3,
+                        0.1, 0.1, 0.1,
+                        0.02
+                );
+                serverLevel.sendParticles(
+                        ParticleTypes.SMOKE,
+                        this.getX(), this.getY(), this.getZ(),
+                        2,
+                        0.1, 0.1, 0.1,
+                        0.01
+                );
+                return;
+            }
+            
+            // Nuclear - eerie glow
+            if (projectileType.isNuclear()) {
+                serverLevel.sendParticles(
+                        ParticleTypes.SOUL_FIRE_FLAME,
+                        this.getX(), this.getY(), this.getZ(),
+                        2,
+                        0.05, 0.05, 0.05,
+                        0.01
+                );
+                return;
+            }
+            
+            // Incendiary - fire particles
+            if (projectileType.causesFire()) {
+                serverLevel.sendParticles(
+                        ParticleTypes.FLAME,
+                        this.getX(), this.getY(), this.getZ(),
+                        2,
+                        0.05, 0.05, 0.05,
+                        0.01
+                );
+                return;
+            }
+            
+            // Standard smoke trail
             serverLevel.sendParticles(
                     ParticleTypes.SMOKE,
                     this.getX(), this.getY(), this.getZ(),
-                    1,           // Count
-                    0.05, 0.05, 0.05,  // Spread
-                    0.01         // Speed
+                    1,
+                    0.05, 0.05, 0.05,
+                    0.01
             );
             
             // Occasionally spawn flame particles for visual flair
@@ -419,6 +741,25 @@ public class CannonballEntity extends Projectile {
         return this.entityData.get(DATA_EXPLOSION_RADIUS);
     }
     
+    /**
+     * Sets the projectile type for physics behavior.
+     * 
+     * @param type The projectile type
+     */
+    public void setProjectileType(ProjectileType type) {
+        this.projectileType = type;
+        this.entityData.set(DATA_PROJECTILE_TYPE, type.ordinal());
+    }
+    
+    /**
+     * Gets the projectile type.
+     * 
+     * @return The projectile type
+     */
+    public ProjectileType getProjectileType() {
+        return ProjectileType.values()[this.entityData.get(DATA_PROJECTILE_TYPE)];
+    }
+    
     // ==================== NBT SERIALIZATION ====================
     
     /**
@@ -433,6 +774,8 @@ public class CannonballEntity extends Projectile {
         tag.putFloat("ExplosionRadius", explosionRadius);
         tag.putInt("TicksAlive", ticksAlive);
         tag.putBoolean("HasExploded", hasExploded);
+        tag.putInt("ProjectileType", projectileType.ordinal());
+        tag.putInt("BlocksPenetrated", blocksPenetrated);
     }
     
     /**
@@ -447,10 +790,18 @@ public class CannonballEntity extends Projectile {
         explosionRadius = tag.getFloat("ExplosionRadius");
         ticksAlive = tag.getInt("TicksAlive");
         hasExploded = tag.getBoolean("HasExploded");
+        blocksPenetrated = tag.getInt("BlocksPenetrated");
+        
+        // Load projectile type
+        int typeOrdinal = tag.getInt("ProjectileType");
+        if (typeOrdinal >= 0 && typeOrdinal < ProjectileType.values().length) {
+            projectileType = ProjectileType.values()[typeOrdinal];
+        }
         
         // Sync to entity data
         this.entityData.set(DATA_DAMAGE, damage);
         this.entityData.set(DATA_EXPLOSION_RADIUS, explosionRadius);
+        this.entityData.set(DATA_PROJECTILE_TYPE, projectileType.ordinal());
     }
     
     // ==================== MISC ====================

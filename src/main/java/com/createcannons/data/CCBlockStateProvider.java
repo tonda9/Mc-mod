@@ -40,9 +40,15 @@ public class CCBlockStateProvider extends BlockStateProvider {
      */
     @Override
     protected void registerStatesAndModels() {
-        // Simple cube blocks
+        // Simple cube blocks for cannon parts
         simpleBlockWithItem(CCBlocks.CANNON_BARREL);
         simpleBlockWithItem(CCBlocks.CANNON_BREECH);
+        
+        // Ore blocks
+        simpleBlockWithItem(CCBlocks.CANNONITE_ORE);
+        simpleBlockWithItem(CCBlocks.DEEPSLATE_CANNONITE_ORE);
+        simpleBlockWithItem(CCBlocks.CANNONITE_BLOCK);
+        simpleBlockWithItem(CCBlocks.RAW_CANNONITE_BLOCK);
         
         // Kinetic Cannon - directional block
         // Uses a directional model that rotates based on facing

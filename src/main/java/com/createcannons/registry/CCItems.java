@@ -145,6 +145,230 @@ public class CCItems {
             () -> new Item(new Item.Properties().stacksTo(16))
     );
     
+    // ==================== ADVANCED PROJECTILE ITEMS ====================
+    
+    /**
+     * Nuclear Shell - devastating ammunition with massive explosion.
+     * 
+     * The most powerful ammunition type. Creates a massive explosion
+     * with lingering radiation effects. Very expensive to craft.
+     * 
+     * Stats:
+     * - Damage: 100
+     * - Explosion radius: 15.0
+     * - Stack size: 1
+     * - Special: Lingering damage effect
+     */
+    public static final DeferredItem<CannonballItem> NUCLEAR_SHELL = ITEMS.register(
+            "nuclear_shell",
+            () -> new CannonballItem(new Item.Properties().stacksTo(1), 100.0f, 15.0f)
+    );
+    
+    /**
+     * Rocket Ammo - high velocity self-propelled projectile.
+     * 
+     * Uses internal propulsion to maintain velocity over long distances.
+     * Less affected by gravity, travels faster and further.
+     * 
+     * Stats:
+     * - Damage: 30
+     * - Explosion radius: 3.0
+     * - Stack size: 8
+     * - Special: Reduced gravity effect, flame trail
+     */
+    public static final DeferredItem<CannonballItem> ROCKET_AMMO = ITEMS.register(
+            "rocket_ammo",
+            () -> new CannonballItem(new Item.Properties().stacksTo(8), 30.0f, 3.0f)
+    );
+    
+    /**
+     * Incendiary Shell - sets targets on fire.
+     * 
+     * Designed to create fires on impact. Lower direct damage
+     * but ignites blocks and entities in the blast area.
+     * 
+     * Stats:
+     * - Damage: 15
+     * - Explosion radius: 4.0
+     * - Stack size: 8
+     * - Special: Sets fire on impact
+     */
+    public static final DeferredItem<CannonballItem> INCENDIARY_SHELL = ITEMS.register(
+            "incendiary_shell",
+            () -> new CannonballItem(new Item.Properties().stacksTo(8), 15.0f, 4.0f)
+    );
+    
+    /**
+     * Armor Piercing Round - high damage, no explosion.
+     * 
+     * Designed to penetrate armor and fortifications. Very high
+     * direct damage but no area effect. Can penetrate through
+     * weaker blocks.
+     * 
+     * Stats:
+     * - Damage: 80
+     * - Explosion radius: 0.5
+     * - Stack size: 16
+     * - Special: Penetrates weak blocks
+     */
+    public static final DeferredItem<CannonballItem> ARMOR_PIERCING_ROUND = ITEMS.register(
+            "armor_piercing_round",
+            () -> new CannonballItem(new Item.Properties().stacksTo(16), 80.0f, 0.5f)
+    );
+    
+    /**
+     * Cluster Bomb - splits into multiple smaller projectiles.
+     * 
+     * Releases multiple smaller explosions over a wide area.
+     * Effective against groups of enemies or large structures.
+     * 
+     * Stats:
+     * - Damage: 10 (per cluster)
+     * - Explosion radius: 1.5 (per cluster)
+     * - Stack size: 4
+     * - Special: Splits into 8 mini projectiles
+     */
+    public static final DeferredItem<CannonballItem> CLUSTER_BOMB = ITEMS.register(
+            "cluster_bomb",
+            () -> new CannonballItem(new Item.Properties().stacksTo(4), 10.0f, 1.5f)
+    );
+    
+    /**
+     * Smoke Shell - creates a smoke screen.
+     * 
+     * Non-damaging projectile that creates a large smoke cloud
+     * on impact. Useful for cover and distraction.
+     * 
+     * Stats:
+     * - Damage: 0
+     * - Explosion radius: 0
+     * - Stack size: 16
+     * - Special: Creates smoke particles
+     */
+    public static final DeferredItem<CannonballItem> SMOKE_SHELL = ITEMS.register(
+            "smoke_shell",
+            () -> new CannonballItem(new Item.Properties().stacksTo(16), 0.0f, 0.0f)
+    );
+    
+    /**
+     * Grapeshot - anti-personnel ammunition.
+     * 
+     * Fires multiple small projectiles in a spread pattern.
+     * Effective against groups but low damage per projectile.
+     * 
+     * Stats:
+     * - Damage: 5 (per pellet)
+     * - Explosion radius: 0
+     * - Stack size: 16
+     * - Special: Fires 12 pellets in spread
+     */
+    public static final DeferredItem<CannonballItem> GRAPESHOT = ITEMS.register(
+            "grapeshot",
+            () -> new CannonballItem(new Item.Properties().stacksTo(16), 5.0f, 0.0f)
+    );
+    
+    // ==================== CANNONITE ORE ITEMS ====================
+    
+    /**
+     * Raw Cannonite - unprocessed ore material.
+     * 
+     * Dropped when mining cannonite ore. Must be smelted
+     * or blasted to produce cannonite ingots.
+     */
+    public static final DeferredItem<Item> RAW_CANNONITE = ITEMS.register(
+            "raw_cannonite",
+            () -> new Item(new Item.Properties())
+    );
+    
+    /**
+     * Cannonite Ingot - processed cannonite metal.
+     * 
+     * The primary crafting material for advanced ammunition.
+     * Obtained by smelting raw cannonite.
+     */
+    public static final DeferredItem<Item> CANNONITE_INGOT = ITEMS.register(
+            "cannonite_ingot",
+            () -> new Item(new Item.Properties())
+    );
+    
+    /**
+     * Cannonite Nugget - small piece of cannonite.
+     * 
+     * 9 nuggets can be crafted into an ingot.
+     * Useful for precise crafting recipes.
+     */
+    public static final DeferredItem<Item> CANNONITE_NUGGET = ITEMS.register(
+            "cannonite_nugget",
+            () -> new Item(new Item.Properties())
+    );
+    
+    /**
+     * Enriched Cannonite - processed for nuclear applications.
+     * 
+     * Highly refined cannonite used in nuclear shells.
+     * Requires special processing to create.
+     */
+    public static final DeferredItem<Item> ENRICHED_CANNONITE = ITEMS.register(
+            "enriched_cannonite",
+            () -> new Item(new Item.Properties().stacksTo(16))
+    );
+    
+    /**
+     * Rocket Fuel - propellant for rocket ammunition.
+     * 
+     * Crafted from blaze powder and gunpowder.
+     * Used in rocket ammo recipes.
+     */
+    public static final DeferredItem<Item> ROCKET_FUEL = ITEMS.register(
+            "rocket_fuel",
+            () -> new Item(new Item.Properties().stacksTo(16))
+    );
+    
+    /**
+     * Fuse - detonation component.
+     * 
+     * Required for explosive ammunition types.
+     * Crafted from string and gunpowder.
+     */
+    public static final DeferredItem<Item> FUSE = ITEMS.register(
+            "fuse",
+            () -> new Item(new Item.Properties().stacksTo(64))
+    );
+    
+    // ==================== BLOCK ITEMS FOR ORES ====================
+    
+    /**
+     * Block item for Cannonite Ore.
+     */
+    public static final DeferredItem<BlockItem> CANNONITE_ORE = ITEMS.registerSimpleBlockItem(
+            "cannonite_ore",
+            CCBlocks.CANNONITE_ORE
+    );
+    
+    /**
+     * Block item for Deepslate Cannonite Ore.
+     */
+    public static final DeferredItem<BlockItem> DEEPSLATE_CANNONITE_ORE = ITEMS.registerSimpleBlockItem(
+            "deepslate_cannonite_ore",
+            CCBlocks.DEEPSLATE_CANNONITE_ORE
+    );
+    
+    /**
+     * Block item for Cannonite Block.
+     */
+    public static final DeferredItem<BlockItem> CANNONITE_BLOCK = ITEMS.registerSimpleBlockItem(
+            "cannonite_block",
+            CCBlocks.CANNONITE_BLOCK
+    );
+    
+    /**
+     * Block item for Raw Cannonite Block.
+     */
+    public static final DeferredItem<BlockItem> RAW_CANNONITE_BLOCK = ITEMS.registerSimpleBlockItem(
+            "raw_cannonite_block",
+            CCBlocks.RAW_CANNONITE_BLOCK
+    );
+    
     // ==================== HELPER METHODS ====================
     
     /**

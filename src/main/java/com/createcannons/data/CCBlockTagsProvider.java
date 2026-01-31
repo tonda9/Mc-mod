@@ -48,12 +48,20 @@ public class CCBlockTagsProvider extends BlockTagsProvider {
         tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(CCBlocks.KINETIC_CANNON.get())
                 .add(CCBlocks.CANNON_BARREL.get())
-                .add(CCBlocks.CANNON_BREECH.get());
+                .add(CCBlocks.CANNON_BREECH.get())
+                .add(CCBlocks.CANNONITE_ORE.get())
+                .add(CCBlocks.DEEPSLATE_CANNONITE_ORE.get())
+                .add(CCBlocks.CANNONITE_BLOCK.get())
+                .add(CCBlocks.RAW_CANNONITE_BLOCK.get());
         
-        // Require iron tool or better
+        // Cannon blocks require iron tool or better
         tag(BlockTags.NEEDS_IRON_TOOL)
                 .add(CCBlocks.KINETIC_CANNON.get())
                 .add(CCBlocks.CANNON_BARREL.get())
-                .add(CCBlocks.CANNON_BREECH.get());
+                .add(CCBlocks.CANNON_BREECH.get())
+                .add(CCBlocks.CANNONITE_ORE.get())
+                .add(CCBlocks.DEEPSLATE_CANNONITE_ORE.get())
+                .add(CCBlocks.CANNONITE_BLOCK.get())
+                .add(CCBlocks.RAW_CANNONITE_BLOCK.get());
     }
 }

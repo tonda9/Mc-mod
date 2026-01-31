@@ -53,15 +53,38 @@ public class CCCreativeModeTabs {
                                 output.accept(CCItems.CANNON_BARREL.get());
                                 output.accept(CCItems.CANNON_BREECH.get());
                                 
-                                // === Projectiles ===
+                                // === Ore Blocks ===
+                                output.accept(CCItems.CANNONITE_ORE.get());
+                                output.accept(CCItems.DEEPSLATE_CANNONITE_ORE.get());
+                                output.accept(CCItems.CANNONITE_BLOCK.get());
+                                output.accept(CCItems.RAW_CANNONITE_BLOCK.get());
+                                
+                                // === Basic Projectiles ===
                                 output.accept(CCItems.IRON_CANNONBALL.get());
                                 output.accept(CCItems.STEEL_CANNONBALL.get());
                                 output.accept(CCItems.EXPLOSIVE_SHELL.get());
                                 
-                                // === Components ===
+                                // === Advanced Projectiles ===
+                                output.accept(CCItems.NUCLEAR_SHELL.get());
+                                output.accept(CCItems.ROCKET_AMMO.get());
+                                output.accept(CCItems.INCENDIARY_SHELL.get());
+                                output.accept(CCItems.ARMOR_PIERCING_ROUND.get());
+                                output.accept(CCItems.CLUSTER_BOMB.get());
+                                output.accept(CCItems.SMOKE_SHELL.get());
+                                output.accept(CCItems.GRAPESHOT.get());
+                                
+                                // === Cannonite Materials ===
+                                output.accept(CCItems.RAW_CANNONITE.get());
+                                output.accept(CCItems.CANNONITE_INGOT.get());
+                                output.accept(CCItems.CANNONITE_NUGGET.get());
+                                output.accept(CCItems.ENRICHED_CANNONITE.get());
+                                
+                                // === Crafting Components ===
                                 output.accept(CCItems.CANNON_CASTING.get());
                                 output.accept(CCItems.INCOMPLETE_CANNON_BARREL.get());
                                 output.accept(CCItems.GUNPOWDER_CHARGE.get());
+                                output.accept(CCItems.ROCKET_FUEL.get());
+                                output.accept(CCItems.FUSE.get());
                             })
                             .build()
             );

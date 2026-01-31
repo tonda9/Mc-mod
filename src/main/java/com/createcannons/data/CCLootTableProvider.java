@@ -7,6 +7,7 @@
 package com.createcannons.data;
 
 import com.createcannons.registry.CCBlocks;
+import com.createcannons.registry.CCItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.WritableRegistry;
 import net.minecraft.data.PackOutput;
@@ -14,6 +15,7 @@ import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.ValidationContext;
@@ -60,10 +62,20 @@ public class CCLootTableProvider extends LootTableProvider {
          */
         @Override
         protected void generate() {
-            // All cannon blocks drop themselves
+            // Cannon blocks drop themselves
             dropSelf(CCBlocks.KINETIC_CANNON.get());
             dropSelf(CCBlocks.CANNON_BARREL.get());
             dropSelf(CCBlocks.CANNON_BREECH.get());
+            
+            // Ore blocks drop raw cannonite (1-3 with fortune bonus)
+            add(CCBlocks.CANNONITE_ORE.get(), 
+                    createOreDrop(CCBlocks.CANNONITE_ORE.get(), CCItems.RAW_CANNONITE.get()));
+            add(CCBlocks.DEEPSLATE_CANNONITE_ORE.get(), 
+                    createOreDrop(CCBlocks.DEEPSLATE_CANNONITE_ORE.get(), CCItems.RAW_CANNONITE.get()));
+            
+            // Storage blocks drop themselves
+            dropSelf(CCBlocks.CANNONITE_BLOCK.get());
+            dropSelf(CCBlocks.RAW_CANNONITE_BLOCK.get());
         }
         
         /**
@@ -74,7 +86,11 @@ public class CCLootTableProvider extends LootTableProvider {
             return List.of(
                     CCBlocks.KINETIC_CANNON.get(),
                     CCBlocks.CANNON_BARREL.get(),
-                    CCBlocks.CANNON_BREECH.get()
+                    CCBlocks.CANNON_BREECH.get(),
+                    CCBlocks.CANNONITE_ORE.get(),
+                    CCBlocks.DEEPSLATE_CANNONITE_ORE.get(),
+                    CCBlocks.CANNONITE_BLOCK.get(),
+                    CCBlocks.RAW_CANNONITE_BLOCK.get()
             );
         }
     }

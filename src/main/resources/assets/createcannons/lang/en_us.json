@@ -9,9 +9,33 @@
     "item.createcannons.incomplete_cannon_barrel": "Incomplete Cannon Barrel",
     "item.createcannons.gunpowder_charge": "Gunpowder Charge",
     
+    "item.createcannons.nuclear_shell": "Nuclear Shell",
+    "item.createcannons.rocket_ammo": "Rocket Ammunition",
+    "item.createcannons.incendiary_shell": "Incendiary Shell",
+    "item.createcannons.armor_piercing_round": "Armor Piercing Round",
+    "item.createcannons.cluster_bomb": "Cluster Bomb",
+    "item.createcannons.smoke_shell": "Smoke Shell",
+    "item.createcannons.grapeshot": "Grapeshot",
+    
+    "item.createcannons.raw_cannonite": "Raw Cannonite",
+    "item.createcannons.cannonite_ingot": "Cannonite Ingot",
+    "item.createcannons.cannonite_nugget": "Cannonite Nugget",
+    "item.createcannons.enriched_cannonite": "Enriched Cannonite",
+    "item.createcannons.rocket_fuel": "Rocket Fuel",
+    "item.createcannons.fuse": "Fuse",
+    
+    "item.createcannons.cannonite_ore": "Cannonite Ore",
+    "item.createcannons.deepslate_cannonite_ore": "Deepslate Cannonite Ore",
+    "item.createcannons.cannonite_block": "Block of Cannonite",
+    "item.createcannons.raw_cannonite_block": "Block of Raw Cannonite",
+    
     "block.createcannons.kinetic_cannon": "Kinetic Cannon",
     "block.createcannons.cannon_barrel": "Cannon Barrel",
     "block.createcannons.cannon_breech": "Cannon Breech",
+    "block.createcannons.cannonite_ore": "Cannonite Ore",
+    "block.createcannons.deepslate_cannonite_ore": "Deepslate Cannonite Ore",
+    "block.createcannons.cannonite_block": "Block of Cannonite",
+    "block.createcannons.raw_cannonite_block": "Block of Raw Cannonite",
     
     "itemGroup.createcannons.main": "Create Cannons",
     
@@ -20,6 +44,13 @@
     "tooltip.createcannons.cannonball_usage": "Load into a Kinetic Cannon to fire",
     "tooltip.createcannons.stress_impact": "Stress Impact: %s SU",
     "tooltip.createcannons.requires_rotation": "Requires Rotational Force",
+    "tooltip.createcannons.nuclear_warning": "§4WARNING: Causes radiation damage!",
+    "tooltip.createcannons.rocket_boost": "Self-propelled, reduced gravity effect",
+    "tooltip.createcannons.incendiary_fire": "Sets targets on fire",
+    "tooltip.createcannons.armor_piercing": "Penetrates through weak blocks",
+    "tooltip.createcannons.cluster_split": "Splits into 8 smaller explosives",
+    "tooltip.createcannons.smoke_cover": "Creates a smoke screen",
+    "tooltip.createcannons.grapeshot_spread": "Fires multiple pellets in a spread",
     
     "message.createcannons.projectile_loaded": "Projectile loaded",
     "message.createcannons.projectile_already_loaded": "Projectile already loaded",
