@@ -23,14 +23,14 @@ import net.neoforged.neoforge.registries.DeferredRegister;
  * 
  * Item Organization:
  * 1. Standard Cannon Blocks
- * 2. Nova Cannon Multiblock Components
- * 3. Cannonite Ore Blocks
- * 4. Siegite Ore Blocks
- * 5. Basic Projectiles
- * 6. Advanced Projectiles
- * 7. End-Game Ammunition
- * 8. Cannonite Materials
- * 9. Siegite Materials
+ * 2. Caliber-Specific Cannons
+ * 3. Caliber Barrels
+ * 4. Nova Cannon Multiblock Components
+ * 5. Create Integration Blocks
+ * 6. Armor Blocks
+ * 7. Ore Blocks
+ * 8. Projectiles by Tier
+ * 9. Materials
  * 10. Crafting Components
  */
 public class CCCreativeModeTabs {
@@ -62,10 +62,47 @@ public class CCCreativeModeTabs {
                                 output.accept(CCItems.CANNON_BARREL.get());
                                 output.accept(CCItems.CANNON_BREECH.get());
                                 
+                                // ========== CALIBER-SPECIFIC CANNONS ==========
+                                output.accept(CCItems.AUTOCANNON_30MM.get());
+                                output.accept(CCItems.FIELD_GUN_75MM.get());
+                                output.accept(CCItems.TANK_CANNON_120MM.get());
+                                output.accept(CCItems.HOWITZER_155MM.get());
+                                output.accept(CCItems.SIEGE_GUN_280MM.get());
+                                output.accept(CCItems.RAILWAY_GUN_400MM.get());
+                                output.accept(CCItems.GUSTAV_CANNON_800MM.get());
+                                output.accept(CCItems.SIEGE_MORTAR_1000MM.get());
+                                
+                                // ========== CALIBER BARRELS ==========
+                                output.accept(CCItems.BARREL_30MM.get());
+                                output.accept(CCItems.BARREL_75MM.get());
+                                output.accept(CCItems.BARREL_120MM.get());
+                                output.accept(CCItems.BARREL_155MM.get());
+                                output.accept(CCItems.BARREL_280MM.get());
+                                output.accept(CCItems.BARREL_400MM.get());
+                                output.accept(CCItems.BARREL_800MM.get());
+                                output.accept(CCItems.BARREL_1000MM.get());
+                                
                                 // ========== NOVA CANNON MULTIBLOCK ==========
                                 output.accept(CCItems.NOVA_CANNON_CORE.get());
                                 output.accept(CCItems.NOVA_CANNON_FRAME.get());
                                 output.accept(CCItems.HEAVY_BARREL_SEGMENT.get());
+                                
+                                // ========== CREATE INTEGRATION BLOCKS ==========
+                                output.accept(CCItems.CANNON_TURRET_BEARING.get());
+                                output.accept(CCItems.AMMO_FEED_MECHANISM.get());
+                                output.accept(CCItems.AUTOLOADER.get());
+                                output.accept(CCItems.TARGETING_COMPUTER.get());
+                                output.accept(CCItems.GUN_STABILIZER.get());
+                                
+                                // ========== ARMOR BLOCKS ==========
+                                output.accept(CCItems.LIGHT_ARMOR_PLATE.get());
+                                output.accept(CCItems.HEAVY_ARMOR_PLATE.get());
+                                output.accept(CCItems.REINFORCED_ARMOR_BLOCK.get());
+                                output.accept(CCItems.SPACED_ARMOR_BLOCK.get());
+                                output.accept(CCItems.REACTIVE_ARMOR_BLOCK.get());
+                                output.accept(CCItems.SLOPED_ARMOR_BLOCK.get());
+                                output.accept(CCItems.ARMOR_GRATING.get());
+                                output.accept(CCItems.BLAST_DOOR.get());
                                 
                                 // ========== CANNONITE ORE BLOCKS ==========
                                 output.accept(CCItems.CANNONITE_ORE.get());
@@ -78,6 +115,12 @@ public class CCCreativeModeTabs {
                                 output.accept(CCItems.DEEPSLATE_SIEGITE_ORE.get());
                                 output.accept(CCItems.SIEGITE_BLOCK.get());
                                 output.accept(CCItems.RAW_SIEGITE_BLOCK.get());
+                                
+                                // ========== TUNGSTEN ORE BLOCKS ==========
+                                output.accept(CCItems.TUNGSTEN_ORE.get());
+                                output.accept(CCItems.DEEPSLATE_TUNGSTEN_ORE.get());
+                                output.accept(CCItems.TUNGSTEN_BLOCK.get());
+                                output.accept(CCItems.RAW_TUNGSTEN_BLOCK.get());
                                 
                                 // ========== BASIC PROJECTILES (TIER 1-2) ==========
                                 output.accept(CCItems.IRON_CANNONBALL.get());
@@ -101,6 +144,37 @@ public class CCCreativeModeTabs {
                                 // ========== END-GAME AMMUNITION (TIER 4) ==========
                                 output.accept(CCItems.NOVA_SHELL.get());
                                 
+                                // ========== CALIBER-SPECIFIC AMMUNITION ==========
+                                // 30mm
+                                output.accept(CCItems.SHELL_30MM_AP.get());
+                                output.accept(CCItems.SHELL_30MM_HE.get());
+                                output.accept(CCItems.SHELL_30MM_TRACER.get());
+                                // 75mm
+                                output.accept(CCItems.SHELL_75MM_AP.get());
+                                output.accept(CCItems.SHELL_75MM_HE.get());
+                                output.accept(CCItems.SHELL_75MM_SMOKE.get());
+                                // 120mm
+                                output.accept(CCItems.SHELL_120MM_AP.get());
+                                output.accept(CCItems.SHELL_120MM_HE.get());
+                                output.accept(CCItems.SHELL_120MM_HEAT.get());
+                                output.accept(CCItems.SHELL_120MM_SABOT.get());
+                                // 155mm
+                                output.accept(CCItems.SHELL_155MM_HE.get());
+                                output.accept(CCItems.SHELL_155MM_INCENDIARY.get());
+                                output.accept(CCItems.SHELL_155MM_CLUSTER.get());
+                                // 280mm
+                                output.accept(CCItems.SHELL_280MM_HE.get());
+                                output.accept(CCItems.SHELL_280MM_BUNKER_BUSTER.get());
+                                // 400mm
+                                output.accept(CCItems.SHELL_400MM_SIEGE.get());
+                                output.accept(CCItems.SHELL_400MM_DEVASTATOR.get());
+                                // 800mm
+                                output.accept(CCItems.SHELL_800MM_GUSTAV.get());
+                                output.accept(CCItems.SHELL_800MM_ANNIHILATOR.get());
+                                // 1000mm
+                                output.accept(CCItems.SHELL_1000MM_CATACLYSM.get());
+                                output.accept(CCItems.SHELL_1000MM_WORLDBREAKER.get());
+                                
                                 // ========== CANNONITE MATERIALS ==========
                                 output.accept(CCItems.RAW_CANNONITE.get());
                                 output.accept(CCItems.CANNONITE_INGOT.get());
@@ -113,6 +187,13 @@ public class CCCreativeModeTabs {
                                 output.accept(CCItems.SIEGITE_NUGGET.get());
                                 output.accept(CCItems.REINFORCED_SIEGITE_PLATING.get());
                                 output.accept(CCItems.NOVA_CORE_COMPONENT.get());
+                                
+                                // ========== TUNGSTEN MATERIALS ==========
+                                output.accept(CCItems.RAW_TUNGSTEN.get());
+                                output.accept(CCItems.TUNGSTEN_INGOT.get());
+                                output.accept(CCItems.TUNGSTEN_NUGGET.get());
+                                output.accept(CCItems.HARDENED_STEEL_INGOT.get());
+                                output.accept(CCItems.COMPOSITE_PLATING.get());
                                 
                                 // ========== CRAFTING COMPONENTS ==========
                                 output.accept(CCItems.CANNON_CASTING.get());

@@ -588,6 +588,232 @@ public class CCItems {
             CCBlocks.HEAVY_BARREL_SEGMENT
     );
     
+    // ==================== ARMOR BLOCK ITEMS ====================
+    
+    public static final DeferredItem<BlockItem> LIGHT_ARMOR_PLATE = ITEMS.registerSimpleBlockItem(
+            "light_armor_plate", CCBlocks.LIGHT_ARMOR_PLATE);
+    
+    public static final DeferredItem<BlockItem> HEAVY_ARMOR_PLATE = ITEMS.registerSimpleBlockItem(
+            "heavy_armor_plate", CCBlocks.HEAVY_ARMOR_PLATE);
+    
+    public static final DeferredItem<BlockItem> REINFORCED_ARMOR_BLOCK = ITEMS.registerSimpleBlockItem(
+            "reinforced_armor_block", CCBlocks.REINFORCED_ARMOR_BLOCK);
+    
+    public static final DeferredItem<BlockItem> SPACED_ARMOR_BLOCK = ITEMS.registerSimpleBlockItem(
+            "spaced_armor_block", CCBlocks.SPACED_ARMOR_BLOCK);
+    
+    public static final DeferredItem<BlockItem> REACTIVE_ARMOR_BLOCK = ITEMS.registerSimpleBlockItem(
+            "reactive_armor_block", CCBlocks.REACTIVE_ARMOR_BLOCK);
+    
+    public static final DeferredItem<BlockItem> SLOPED_ARMOR_BLOCK = ITEMS.registerSimpleBlockItem(
+            "sloped_armor_block", CCBlocks.SLOPED_ARMOR_BLOCK);
+    
+    public static final DeferredItem<BlockItem> ARMOR_GRATING = ITEMS.registerSimpleBlockItem(
+            "armor_grating", CCBlocks.ARMOR_GRATING);
+    
+    public static final DeferredItem<BlockItem> BLAST_DOOR = ITEMS.registerSimpleBlockItem(
+            "blast_door", CCBlocks.BLAST_DOOR);
+    
+    // ==================== TUNGSTEN ORE ITEMS ====================
+    
+    public static final DeferredItem<BlockItem> TUNGSTEN_ORE = ITEMS.registerSimpleBlockItem(
+            "tungsten_ore", CCBlocks.TUNGSTEN_ORE);
+    
+    public static final DeferredItem<BlockItem> DEEPSLATE_TUNGSTEN_ORE = ITEMS.registerSimpleBlockItem(
+            "deepslate_tungsten_ore", CCBlocks.DEEPSLATE_TUNGSTEN_ORE);
+    
+    public static final DeferredItem<BlockItem> TUNGSTEN_BLOCK = ITEMS.registerSimpleBlockItem(
+            "tungsten_block", CCBlocks.TUNGSTEN_BLOCK);
+    
+    public static final DeferredItem<BlockItem> RAW_TUNGSTEN_BLOCK = ITEMS.registerSimpleBlockItem(
+            "raw_tungsten_block", CCBlocks.RAW_TUNGSTEN_BLOCK);
+    
+    /**
+     * Raw Tungsten - unprocessed dense ore material.
+     * Essential for armor-piercing rounds and heavy armor.
+     */
+    public static final DeferredItem<Item> RAW_TUNGSTEN = ITEMS.register(
+            "raw_tungsten",
+            () -> new Item(new Item.Properties())
+    );
+    
+    /**
+     * Tungsten Ingot - processed heavy metal.
+     * Key material for AP rounds and reinforced armor.
+     */
+    public static final DeferredItem<Item> TUNGSTEN_INGOT = ITEMS.register(
+            "tungsten_ingot",
+            () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON))
+    );
+    
+    /**
+     * Tungsten Nugget - small piece of tungsten.
+     */
+    public static final DeferredItem<Item> TUNGSTEN_NUGGET = ITEMS.register(
+            "tungsten_nugget",
+            () -> new Item(new Item.Properties())
+    );
+    
+    /**
+     * Hardened Steel Ingot - alloy for armor crafting.
+     * Made by combining iron, carbon, and tungsten.
+     */
+    public static final DeferredItem<Item> HARDENED_STEEL_INGOT = ITEMS.register(
+            "hardened_steel_ingot",
+            () -> new Item(new Item.Properties())
+    );
+    
+    /**
+     * Composite Plating - advanced armor component.
+     * Layered material combining multiple metals.
+     */
+    public static final DeferredItem<Item> COMPOSITE_PLATING = ITEMS.register(
+            "composite_plating",
+            () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON))
+    );
+    
+    // ==================== CALIBER CANNON BLOCK ITEMS ====================
+    
+    public static final DeferredItem<BlockItem> AUTOCANNON_30MM = ITEMS.registerSimpleBlockItem(
+            "autocannon_30mm", CCBlocks.AUTOCANNON_30MM);
+    
+    public static final DeferredItem<BlockItem> FIELD_GUN_75MM = ITEMS.registerSimpleBlockItem(
+            "field_gun_75mm", CCBlocks.FIELD_GUN_75MM);
+    
+    public static final DeferredItem<BlockItem> TANK_CANNON_120MM = ITEMS.registerSimpleBlockItem(
+            "tank_cannon_120mm", CCBlocks.TANK_CANNON_120MM);
+    
+    public static final DeferredItem<BlockItem> HOWITZER_155MM = ITEMS.registerSimpleBlockItem(
+            "howitzer_155mm", CCBlocks.HOWITZER_155MM);
+    
+    public static final DeferredItem<BlockItem> SIEGE_GUN_280MM = ITEMS.registerSimpleBlockItem(
+            "siege_gun_280mm", CCBlocks.SIEGE_GUN_280MM);
+    
+    public static final DeferredItem<BlockItem> RAILWAY_GUN_400MM = ITEMS.registerSimpleBlockItem(
+            "railway_gun_400mm", CCBlocks.RAILWAY_GUN_400MM);
+    
+    public static final DeferredItem<BlockItem> GUSTAV_CANNON_800MM = ITEMS.registerSimpleBlockItem(
+            "gustav_cannon_800mm", CCBlocks.GUSTAV_CANNON_800MM);
+    
+    public static final DeferredItem<BlockItem> SIEGE_MORTAR_1000MM = ITEMS.registerSimpleBlockItem(
+            "siege_mortar_1000mm", CCBlocks.SIEGE_MORTAR_1000MM);
+    
+    // ==================== CALIBER BARREL BLOCK ITEMS ====================
+    
+    public static final DeferredItem<BlockItem> BARREL_30MM = ITEMS.registerSimpleBlockItem(
+            "barrel_30mm", CCBlocks.BARREL_30MM);
+    
+    public static final DeferredItem<BlockItem> BARREL_75MM = ITEMS.registerSimpleBlockItem(
+            "barrel_75mm", CCBlocks.BARREL_75MM);
+    
+    public static final DeferredItem<BlockItem> BARREL_120MM = ITEMS.registerSimpleBlockItem(
+            "barrel_120mm", CCBlocks.BARREL_120MM);
+    
+    public static final DeferredItem<BlockItem> BARREL_155MM = ITEMS.registerSimpleBlockItem(
+            "barrel_155mm", CCBlocks.BARREL_155MM);
+    
+    public static final DeferredItem<BlockItem> BARREL_280MM = ITEMS.registerSimpleBlockItem(
+            "barrel_280mm", CCBlocks.BARREL_280MM);
+    
+    public static final DeferredItem<BlockItem> BARREL_400MM = ITEMS.registerSimpleBlockItem(
+            "barrel_400mm", CCBlocks.BARREL_400MM);
+    
+    public static final DeferredItem<BlockItem> BARREL_800MM = ITEMS.registerSimpleBlockItem(
+            "barrel_800mm", CCBlocks.BARREL_800MM);
+    
+    public static final DeferredItem<BlockItem> BARREL_1000MM = ITEMS.registerSimpleBlockItem(
+            "barrel_1000mm", CCBlocks.BARREL_1000MM);
+    
+    // ==================== CREATE INTEGRATION BLOCK ITEMS ====================
+    
+    public static final DeferredItem<BlockItem> CANNON_TURRET_BEARING = ITEMS.registerSimpleBlockItem(
+            "cannon_turret_bearing", CCBlocks.CANNON_TURRET_BEARING);
+    
+    public static final DeferredItem<BlockItem> AMMO_FEED_MECHANISM = ITEMS.registerSimpleBlockItem(
+            "ammo_feed_mechanism", CCBlocks.AMMO_FEED_MECHANISM);
+    
+    public static final DeferredItem<BlockItem> AUTOLOADER = ITEMS.registerSimpleBlockItem(
+            "autoloader", CCBlocks.AUTOLOADER);
+    
+    public static final DeferredItem<BlockItem> TARGETING_COMPUTER = ITEMS.registerSimpleBlockItem(
+            "targeting_computer", CCBlocks.TARGETING_COMPUTER);
+    
+    public static final DeferredItem<BlockItem> GUN_STABILIZER = ITEMS.registerSimpleBlockItem(
+            "gun_stabilizer", CCBlocks.GUN_STABILIZER);
+    
+    // ==================== CALIBER-SPECIFIC AMMUNITION ====================
+    
+    // 30mm Ammunition
+    public static final DeferredItem<Item> SHELL_30MM_AP = ITEMS.register("shell_30mm_ap",
+            () -> new Item(new Item.Properties().stacksTo(64)));
+    
+    public static final DeferredItem<Item> SHELL_30MM_HE = ITEMS.register("shell_30mm_he",
+            () -> new Item(new Item.Properties().stacksTo(64)));
+    
+    public static final DeferredItem<Item> SHELL_30MM_TRACER = ITEMS.register("shell_30mm_tracer",
+            () -> new Item(new Item.Properties().stacksTo(64)));
+    
+    // 75mm Ammunition
+    public static final DeferredItem<Item> SHELL_75MM_AP = ITEMS.register("shell_75mm_ap",
+            () -> new Item(new Item.Properties().stacksTo(32)));
+    
+    public static final DeferredItem<Item> SHELL_75MM_HE = ITEMS.register("shell_75mm_he",
+            () -> new Item(new Item.Properties().stacksTo(32)));
+    
+    public static final DeferredItem<Item> SHELL_75MM_SMOKE = ITEMS.register("shell_75mm_smoke",
+            () -> new Item(new Item.Properties().stacksTo(32)));
+    
+    // 120mm Ammunition
+    public static final DeferredItem<Item> SHELL_120MM_AP = ITEMS.register("shell_120mm_ap",
+            () -> new Item(new Item.Properties().stacksTo(16)));
+    
+    public static final DeferredItem<Item> SHELL_120MM_HE = ITEMS.register("shell_120mm_he",
+            () -> new Item(new Item.Properties().stacksTo(16)));
+    
+    public static final DeferredItem<Item> SHELL_120MM_HEAT = ITEMS.register("shell_120mm_heat",
+            () -> new Item(new Item.Properties().stacksTo(16)));
+    
+    public static final DeferredItem<Item> SHELL_120MM_SABOT = ITEMS.register("shell_120mm_sabot",
+            () -> new Item(new Item.Properties().stacksTo(16).rarity(Rarity.UNCOMMON)));
+    
+    // 155mm Ammunition
+    public static final DeferredItem<Item> SHELL_155MM_HE = ITEMS.register("shell_155mm_he",
+            () -> new Item(new Item.Properties().stacksTo(8)));
+    
+    public static final DeferredItem<Item> SHELL_155MM_INCENDIARY = ITEMS.register("shell_155mm_incendiary",
+            () -> new Item(new Item.Properties().stacksTo(8)));
+    
+    public static final DeferredItem<Item> SHELL_155MM_CLUSTER = ITEMS.register("shell_155mm_cluster",
+            () -> new Item(new Item.Properties().stacksTo(8).rarity(Rarity.UNCOMMON)));
+    
+    // 280mm Ammunition
+    public static final DeferredItem<Item> SHELL_280MM_HE = ITEMS.register("shell_280mm_he",
+            () -> new Item(new Item.Properties().stacksTo(4).rarity(Rarity.UNCOMMON)));
+    
+    public static final DeferredItem<Item> SHELL_280MM_BUNKER_BUSTER = ITEMS.register("shell_280mm_bunker_buster",
+            () -> new Item(new Item.Properties().stacksTo(4).rarity(Rarity.RARE)));
+    
+    // 400mm Ammunition
+    public static final DeferredItem<Item> SHELL_400MM_SIEGE = ITEMS.register("shell_400mm_siege",
+            () -> new Item(new Item.Properties().stacksTo(2).rarity(Rarity.RARE)));
+    
+    public static final DeferredItem<Item> SHELL_400MM_DEVASTATOR = ITEMS.register("shell_400mm_devastator",
+            () -> new Item(new Item.Properties().stacksTo(2).rarity(Rarity.RARE)));
+    
+    // 800mm Ammunition
+    public static final DeferredItem<Item> SHELL_800MM_GUSTAV = ITEMS.register("shell_800mm_gustav",
+            () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
+    
+    public static final DeferredItem<Item> SHELL_800MM_ANNIHILATOR = ITEMS.register("shell_800mm_annihilator",
+            () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+    
+    // 1000mm Ammunition
+    public static final DeferredItem<Item> SHELL_1000MM_CATACLYSM = ITEMS.register("shell_1000mm_cataclysm",
+            () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+    
+    public static final DeferredItem<Item> SHELL_1000MM_WORLDBREAKER = ITEMS.register("shell_1000mm_worldbreaker",
+            () -> new Item(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+    
     // ==================== HELPER METHODS ====================
     
     /**
