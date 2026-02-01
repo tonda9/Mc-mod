@@ -1,0 +1,14 @@
+{
+  "_comment": "Siegite Nugget from Ingot - 1 ingot = 9 nuggets. Standard metal pattern.",
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "createcannons:siegite_ingot"
+    }
+  ],
+  "result": {
+    "id": "createcannons:siegite_nugget",
+    "count": 9
+  }
+}

@@ -1,0 +1,16 @@
+{
+    "variants": {
+        "facing=north,powered=false": { "model": "createcannons:block/kinetic_cannon" },
+        "facing=south,powered=false": { "model": "createcannons:block/kinetic_cannon", "y": 180 },
+        "facing=west,powered=false": { "model": "createcannons:block/kinetic_cannon", "y": 270 },
+        "facing=east,powered=false": { "model": "createcannons:block/kinetic_cannon", "y": 90 },
+        "facing=up,powered=false": { "model": "createcannons:block/kinetic_cannon", "x": 270 },
+        "facing=down,powered=false": { "model": "createcannons:block/kinetic_cannon", "x": 90 },
+        "facing=north,powered=true": { "model": "createcannons:block/kinetic_cannon_powered" },
+        "facing=south,powered=true": { "model": "createcannons:block/kinetic_cannon_powered", "y": 180 },
+        "facing=west,powered=true": { "model": "createcannons:block/kinetic_cannon_powered", "y": 270 },
+        "facing=east,powered=true": { "model": "createcannons:block/kinetic_cannon_powered", "y": 90 },
+        "facing=up,powered=true": { "model": "createcannons:block/kinetic_cannon_powered", "x": 270 },
+        "facing=down,powered=true": { "model": "createcannons:block/kinetic_cannon_powered", "x": 90 }
+    }
+}

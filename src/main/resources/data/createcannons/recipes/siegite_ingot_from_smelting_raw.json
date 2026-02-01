@@ -1,0 +1,14 @@
+{
+  "_comment": "Smelt raw siegite to ingot - Standard furnace processing. 200 ticks, 1.5 XP.",
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "ingredient": {
+    "item": "createcannons:raw_siegite"
+  },
+  "result": {
+    "id": "createcannons:siegite_ingot",
+    "count": 1
+  },
+  "experience": 1.5,
+  "cookingtime": 200
+}

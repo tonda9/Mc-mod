@@ -1,0 +1,19 @@
+{
+  "_comment": "Cannonite Ingot from Nuggets - 9 nuggets = 1 ingot. Standard metal pattern.",
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "NNN",
+    "NNN",
+    "NNN"
+  ],
+  "key": {
+    "N": {
+      "item": "createcannons:cannonite_nugget"
+    }
+  },
+  "result": {
+    "id": "createcannons:cannonite_ingot",
+    "count": 1
+  }
+}

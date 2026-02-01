@@ -1,0 +1,28 @@
+{
+  "_comment": "Incendiary Shell - Fire-based ammo. Magma cream + blaze powder around iron cannonball + fuse.",
+  "type": "minecraft:crafting_shaped",
+  "category": "combat",
+  "pattern": [
+    " B ",
+    "MCM",
+    " F "
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:blaze_powder"
+    },
+    "M": {
+      "item": "minecraft:magma_cream"
+    },
+    "C": {
+      "item": "createcannons:iron_cannonball"
+    },
+    "F": {
+      "item": "createcannons:fuse"
+    }
+  },
+  "result": {
+    "id": "createcannons:incendiary_shell",
+    "count": 2
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "_comment": "Smelt siegite ore to ingot - Direct ore smelting. 200 ticks, 1.5 XP.",
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "ingredient": {
+    "item": "createcannons:siegite_ore"
+  },
+  "result": {
+    "id": "createcannons:siegite_ingot",
+    "count": 1
+  },
+  "experience": 1.5,
+  "cookingtime": 200
+}

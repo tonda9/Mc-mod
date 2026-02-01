@@ -1,0 +1,22 @@
+{
+  "_comment": "Steel Cannonball - Higher tier. Requires iron sheets (pressing) and cannonite for hardening. 4 output.",
+  "type": "minecraft:crafting_shaped",
+  "category": "combat",
+  "pattern": [
+    " S ",
+    "SCS",
+    " S "
+  ],
+  "key": {
+    "S": {
+      "item": "create:iron_sheet"
+    },
+    "C": {
+      "item": "createcannons:cannonite_ingot"
+    }
+  },
+  "result": {
+    "id": "createcannons:steel_cannonball",
+    "count": 4
+  }
+}

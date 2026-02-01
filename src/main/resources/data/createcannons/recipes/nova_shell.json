@@ -1,0 +1,25 @@
+{
+  "_comment": "Nova Shell - Ultimate siege ammunition. Only usable in Nova Cannon multiblock.",
+  "type": "minecraft:crafting_shaped",
+  "category": "combat",
+  "pattern": [
+    "PEP",
+    "ECE",
+    "PEP"
+  ],
+  "key": {
+    "P": {
+      "item": "createcannons:reinforced_siegite_plating"
+    },
+    "E": {
+      "item": "createcannons:enriched_cannonite"
+    },
+    "C": {
+      "item": "createcannons:nova_core_component"
+    }
+  },
+  "result": {
+    "id": "createcannons:nova_shell",
+    "count": 1
+  }
+}

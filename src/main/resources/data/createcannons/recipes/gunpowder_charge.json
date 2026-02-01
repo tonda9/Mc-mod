@@ -1,0 +1,22 @@
+{
+  "_comment": "Gunpowder Charge - Paper-wrapped gunpowder. Standard propellant for cannons. 8 output.",
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " P ",
+    "PGP",
+    " P "
+  ],
+  "key": {
+    "P": {
+      "item": "minecraft:paper"
+    },
+    "G": {
+      "item": "minecraft:gunpowder"
+    }
+  },
+  "result": {
+    "id": "createcannons:gunpowder_charge",
+    "count": 8
+  }
+}

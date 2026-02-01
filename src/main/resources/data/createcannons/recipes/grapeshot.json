@@ -1,0 +1,22 @@
+{
+  "_comment": "Grapeshot - Anti-personnel. Iron nuggets packed around a central nugget. 16 output for efficiency.",
+  "type": "minecraft:crafting_shaped",
+  "category": "combat",
+  "pattern": [
+    "NNN",
+    "NIN",
+    "NNN"
+  ],
+  "key": {
+    "N": {
+      "tag": "c:nuggets/iron"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "id": "createcannons:grapeshot",
+    "count": 16
+  }
+}

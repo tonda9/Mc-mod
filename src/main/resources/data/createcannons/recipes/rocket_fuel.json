@@ -1,0 +1,25 @@
+{
+  "_comment": "Rocket Fuel - Blaze powder + gunpowder + coal creates propellant. Mid-game Nether requirement.",
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "BGB",
+    "GCG",
+    "BGB"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:blaze_powder"
+    },
+    "G": {
+      "item": "minecraft:gunpowder"
+    },
+    "C": {
+      "item": "minecraft:coal"
+    }
+  },
+  "result": {
+    "id": "createcannons:rocket_fuel",
+    "count": 4
+  }
+}

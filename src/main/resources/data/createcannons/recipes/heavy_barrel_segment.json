@@ -1,0 +1,19 @@
+{
+  "_comment": "Heavy Barrel Segment - Extended barrel for Nova Cannon multiblock.",
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "PPP",
+    "   ",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "createcannons:reinforced_siegite_plating"
+    }
+  },
+  "result": {
+    "id": "createcannons:heavy_barrel_segment",
+    "count": 2
+  }
+}

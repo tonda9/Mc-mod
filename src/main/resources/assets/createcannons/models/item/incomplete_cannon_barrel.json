@@ -1,0 +1,6 @@
+{
+    "parent": "minecraft:item/generated",
+    "textures": {
+        "layer0": "createcannons:item/incomplete_cannon_barrel"
+    }
+}

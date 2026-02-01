@@ -1,0 +1,56 @@
+# Build artifacts
+build/
+out/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+
+# IDE specific
+.idea/
+*.iml
+*.ipr
+*.iws
+.settings/
+.project
+.classpath
+bin/
+.metadata/
+
+# Eclipse
+eclipse/
+
+# Gradle
+.gradle/
+gradle-app.setting
+!gradle-wrapper.jar
+
+# Runtime directories
+run/
+runs/
+logs/
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Generated resources (keep in repo for distribution)
+# src/generated/resources/
+
+# Temp files
+*.tmp
+*.bak
+*.swp
+*~
+
+# Crash reports
+crash-reports/
+hs_err_pid*
+
+# Local development files
+local.properties
+*.local
+
+# Test outputs
+test-results/

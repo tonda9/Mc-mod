@@ -1,0 +1,22 @@
+{
+  "_comment": "Cannon Casting - Intermediate component made via Create's mechanical press. Clay balls pressed with iron creates a casting form.",
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "CSC",
+    "S S",
+    "CSC"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:clay_ball"
+    },
+    "S": {
+      "item": "create:iron_sheet"
+    }
+  },
+  "result": {
+    "id": "createcannons:cannon_casting",
+    "count": 1
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "_comment": "Raw Siegite from Block - Unpack raw ore block to 9 raw siegite.",
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "createcannons:raw_siegite_block"
+    }
+  ],
+  "result": {
+    "id": "createcannons:raw_siegite",
+    "count": 9
+  }
+}

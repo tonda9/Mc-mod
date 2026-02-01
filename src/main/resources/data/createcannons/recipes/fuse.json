@@ -1,0 +1,22 @@
+{
+  "_comment": "Fuse - String soaked with gunpowder. Basic detonation component. 16 output for abundance.",
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "GSG",
+    "SGS",
+    "GSG"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:gunpowder"
+    },
+    "S": {
+      "tag": "c:strings"
+    }
+  },
+  "result": {
+    "id": "createcannons:fuse",
+    "count": 16
+  }
+}

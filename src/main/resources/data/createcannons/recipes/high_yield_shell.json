@@ -1,0 +1,25 @@
+{
+  "_comment": "High-Yield Shell - Late-game devastating ammunition. Requires enriched cannonite and siegite.",
+  "type": "minecraft:crafting_shaped",
+  "category": "combat",
+  "pattern": [
+    "ESE",
+    "STS",
+    "ESE"
+  ],
+  "key": {
+    "E": {
+      "item": "createcannons:enriched_cannonite"
+    },
+    "S": {
+      "item": "createcannons:siegite_ingot"
+    },
+    "T": {
+      "item": "minecraft:tnt"
+    }
+  },
+  "result": {
+    "id": "createcannons:high_yield_shell",
+    "count": 1
+  }
+}

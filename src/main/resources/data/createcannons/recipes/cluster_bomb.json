@@ -1,0 +1,25 @@
+{
+  "_comment": "Cluster Bomb - Multiple small explosives in an iron casing. Area denial weapon.",
+  "type": "minecraft:crafting_shaped",
+  "category": "combat",
+  "pattern": [
+    "GFG",
+    "GIG",
+    "GGG"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:gunpowder"
+    },
+    "F": {
+      "item": "createcannons:fuse"
+    },
+    "I": {
+      "tag": "c:nuggets/iron"
+    }
+  },
+  "result": {
+    "id": "createcannons:cluster_bomb",
+    "count": 2
+  }
+}

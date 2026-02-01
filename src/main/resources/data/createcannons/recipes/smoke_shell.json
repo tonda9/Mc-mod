@@ -1,0 +1,28 @@
+{
+  "_comment": "Smoke Shell - Utility ammo. Wool + dye creates smoke material, minimal damage.",
+  "type": "minecraft:crafting_shaped",
+  "category": "combat",
+  "pattern": [
+    " W ",
+    "DGD",
+    " I "
+  ],
+  "key": {
+    "W": {
+      "tag": "minecraft:wool"
+    },
+    "D": {
+      "tag": "c:dyes/gray"
+    },
+    "G": {
+      "item": "minecraft:gunpowder"
+    },
+    "I": {
+      "tag": "c:nuggets/iron"
+    }
+  },
+  "result": {
+    "id": "createcannons:smoke_shell",
+    "count": 4
+  }
+}

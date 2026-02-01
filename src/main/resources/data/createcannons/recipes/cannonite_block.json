@@ -1,0 +1,19 @@
+{
+  "_comment": "Cannonite Block - 9 ingots compress to 1 block. Standard storage pattern.",
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "III",
+    "III",
+    "III"
+  ],
+  "key": {
+    "I": {
+      "item": "createcannons:cannonite_ingot"
+    }
+  },
+  "result": {
+    "id": "createcannons:cannonite_block",
+    "count": 1
+  }
+}

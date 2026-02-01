@@ -1,0 +1,19 @@
+{
+  "_comment": "Cannon Barrel - Requires iron sheets (pressing) for the tubular structure. 2 output for resource efficiency.",
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "SSS",
+    "   ",
+    "SSS"
+  ],
+  "key": {
+    "S": {
+      "item": "create:iron_sheet"
+    }
+  },
+  "result": {
+    "id": "createcannons:cannon_barrel",
+    "count": 2
+  }
+}

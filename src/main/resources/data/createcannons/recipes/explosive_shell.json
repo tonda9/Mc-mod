@@ -1,0 +1,20 @@
+{
+  "_comment": "Explosive Shell - Iron cannonball + gunpowder charge + fuse. Shapeless for convenience.",
+  "type": "minecraft:crafting_shapeless",
+  "category": "combat",
+  "ingredients": [
+    {
+      "item": "createcannons:iron_cannonball"
+    },
+    {
+      "item": "createcannons:gunpowder_charge"
+    },
+    {
+      "item": "createcannons:fuse"
+    }
+  ],
+  "result": {
+    "id": "createcannons:explosive_shell",
+    "count": 1
+  }
+}
